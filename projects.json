@@ -1,0 +1,3878 @@
+[
+  {
+    "name": "fractal-trees",
+    "_id": "Qu3dutCD4",
+    "updatedAt": "2023-09-07T15:38:44.598Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64f9db13a6df5ca57a6bd874",
+          "64f9db13a6df5ca57a6bd873",
+          "64f9db13a6df5ca57a6bd875"
+        ],
+        "fileType": "folder",
+        "_id": "64f9db13a6df5ca57a6bd876",
+        "isSelectedFile": false,
+        "createdAt": "2023-09-07T15:38:44.598Z",
+        "updatedAt": "2023-09-07T15:38:44.598Z",
+        "id": "64f9db13a6df5ca57a6bd876"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let angle = 0;\nlet slider;\nlet len;\nlet vel = -0.1;\nlet drawThings = true;\n\nfunction setup() {\n  createCanvas(400, 400);\n  angle = PI / 2;\n  createP(\"Click to generate a new fractal tree...\")\n}\n\nfunction draw() {\n  if (!drawThings) {\n    return;\n  }\n  background(55);\n  // angle += vel;\n  angle = PI / 4;\n  if (angle < 0 || angle > PI / 2) {\n    vel *= -1;\n  }\n\n  let length = 75;\n  translate(200, height);\n\n  stroke(255);\n\n  branch(length);\n  drawThings = false;\n  // noLoop();\n}\n\nfunction mouseClicked() {\n  drawThings = true\n}\n\nfunction branch(length) {\n  if (length < 5) {\n    noStroke();\n    fill(255, 100);\n\n    ellipse(0, 0, 4);\n    return;\n  }\n  strokeWeight(length * 0.05);\n  line(0, 0, 0, -length);\n  translate(0, -length);\n\n  push();\n  rotate(angle + random(-0.5, 0.5));\n  branch(length * random(0.5, 0.9));\n  pop();\n\n  push();\n  rotate(-angle + random(-0.5, 0.9));\n  branch(length * random(0.5, 0.9));\n  pop();\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64f9db13a6df5ca57a6bd873",
+        "isSelectedFile": true,
+        "createdAt": "2023-09-07T15:38:44.598Z",
+        "updatedAt": "2023-09-07T15:38:44.598Z",
+        "id": "64f9db13a6df5ca57a6bd873"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64f9db13a6df5ca57a6bd874",
+        "isSelectedFile": false,
+        "createdAt": "2023-09-07T15:38:44.598Z",
+        "updatedAt": "2023-09-07T15:38:44.598Z",
+        "id": "64f9db13a6df5ca57a6bd874"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64f9db13a6df5ca57a6bd875",
+        "isSelectedFile": false,
+        "createdAt": "2023-09-07T15:38:44.598Z",
+        "updatedAt": "2023-09-07T15:38:44.598Z",
+        "id": "64f9db13a6df5ca57a6bd875"
+      }
+    ],
+    "createdAt": "2023-09-07T15:06:28.909Z",
+    "id": "Qu3dutCD4"
+  },
+  {
+    "name": "fourier-series",
+    "_id": "90AIJxRaW",
+    "updatedAt": "2023-09-07T14:14:48.663Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64f9d162a6df5ca57a6bd870",
+          "64f9d162a6df5ca57a6bd86f",
+          "64f9d162a6df5ca57a6bd871"
+        ],
+        "fileType": "folder",
+        "_id": "64f9d162a6df5ca57a6bd872",
+        "isSelectedFile": false,
+        "createdAt": "2023-09-07T14:14:48.663Z",
+        "updatedAt": "2023-09-07T14:14:48.663Z",
+        "id": "64f9d162a6df5ca57a6bd872"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let time = 0;\nlet wave = [];\n\nfunction setup() {\n  createCanvas(600, 400);\n  time = PI/2\n}\n\nfunction draw() {\n  background(55);\n  translate(150, 200);\n\n  let x = 0;\n  let y = 0;\n\n  for (let i = 0; i < 5; i++) {\n    let prevx = x;\n    let prevy = y;\n\n    let n = i * 2 + 1;\n    let r = 8 * ((4 / n) * PI);\n    x += r * cos(n * time);\n    y += r * sin(n * time);\n    \n\n    stroke(255, 100);\n    noFill();\n    ellipse(prevx, prevy, r * 2);\n\n    fill(255);\n    stroke(255)\n    line(prevx, prevy, x, y);\n    ellipse(x, y, 5);\n    \n    prevx = x;\n    prevy = y\n  }\n  wave.unshift(y);\n\n  translate(150, 0);\n  line(x - 150, y, 0, wave[0]);\n  beginShape();\n  noFill();\n  for (let i = 0; i < wave.length; i++) {\n    vertex(i, wave[i]);\n  }\n  endShape();\n\n  time += 0.02;\n\n  if (wave.length > 500) {\n    wave.pop();\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64f9d162a6df5ca57a6bd86f",
+        "isSelectedFile": true,
+        "createdAt": "2023-09-07T14:14:48.663Z",
+        "updatedAt": "2023-09-07T14:14:48.663Z",
+        "id": "64f9d162a6df5ca57a6bd86f"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64f9d162a6df5ca57a6bd870",
+        "isSelectedFile": false,
+        "createdAt": "2023-09-07T14:14:48.663Z",
+        "updatedAt": "2023-09-07T14:14:48.663Z",
+        "id": "64f9d162a6df5ca57a6bd870"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64f9d162a6df5ca57a6bd871",
+        "isSelectedFile": false,
+        "createdAt": "2023-09-07T14:14:48.663Z",
+        "updatedAt": "2023-09-07T14:14:48.663Z",
+        "id": "64f9d162a6df5ca57a6bd871"
+      }
+    ],
+    "createdAt": "2023-09-07T14:11:05.197Z",
+    "id": "90AIJxRaW"
+  },
+  {
+    "name": "Physics",
+    "_id": "Kcy2zQEFB",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64edb723eff86e41fcd2f2fc",
+          "64edb723eff86e41fcd2f2fd",
+          "64edb723eff86e41fcd2f2fe",
+          "64edb723eff86e41fcd2f2ff"
+        ],
+        "fileType": "folder",
+        "_id": "64edb723eff86e41fcd2f2fb",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-30T11:39:41.976Z",
+        "updatedAt": "2023-08-30T11:39:41.976Z",
+        "id": "64edb723eff86e41fcd2f2fb"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let gravity;\nlet walkers = [];\nlet fpsCount = 0;\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  gravity = createVector(0, 1).normalize().mult(0.25);\n\n  let length = floor(min(width, height) / 25);\n\n  for (let i = 0; i < 200; i++) {\n    walker = new Walker(random(width), random(height), random(5, 35));\n    walkers.push(walker);\n  }\n}\n\nfunction mousePressed() {\n  for (let walker of walkers) {\n    let mouseVec = p5.Vector.sub(createVector(mouseX, mouseY), walker.pos)\n      .normalize()\n      .mult(10);\n    walker.applyForce(mouseVec);\n  }\n}\n\nfunction draw() {\n  background(0);\n  if (frameCount % 10 === 0) {\n    fpsCount = round(frameRate());\n  }\n\n  for (let i = 0; i < walkers.length; i++) {\n    for (let j = i + 1; j < walkers.length; j++) {\n      let walker1 = walkers[i];\n      let walker2 = walkers[j];\n      let distance = p5.Vector.sub(walker1.pos, walker2.pos).mag();\n      if (distance <= walker1.r + walker2.r) {\n        if (walker1.r < walker2.r) {\n          walkers.splice(i, 1)\n          break;\n        }\n        else {\n          walkers.splice(j, 1)\n        }\n      }\n    }\n  }\n\n  for (let i = 0; i < walkers.length; i++) {\n    let walker = walkers[i];\n\n    let r = random();\n    if (walker.vel.mag() < 1) {\n      let force = p5.Vector.random2D().mult(random(2));\n      walker.applyForce(force);\n    }\n    // walker.applyForce(gravity);\n    walker.update();\n    walker.show();\n\n    fill(255);\n    textSize(20);\n    text(fpsCount, 0, 20);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64edb723eff86e41fcd2f2fe",
+        "isSelectedFile": true,
+        "createdAt": "2023-08-30T11:39:41.976Z",
+        "updatedAt": "2023-08-30T11:39:41.976Z",
+        "id": "64edb723eff86e41fcd2f2fe"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n    <script src=\"Walker.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64edb723eff86e41fcd2f2fd",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-30T11:39:41.976Z",
+        "updatedAt": "2023-08-30T11:39:41.976Z",
+        "id": "64edb723eff86e41fcd2f2fd"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64edb723eff86e41fcd2f2ff",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-30T11:39:41.976Z",
+        "updatedAt": "2023-08-30T11:39:41.976Z",
+        "id": "64edb723eff86e41fcd2f2ff"
+      },
+      {
+        "name": "Walker.js",
+        "content": "class Walker {\n  constructor(x, y, r) {\n    this.pos = createVector(x, y);\n    this.vel = p5.Vector.random2D().mult(random(2));\n    this.acc = createVector(0, 0);\n    this.r = r;\n    this.mass = PI* sq(this.r) * 0.0001\n    this.fillColor = undefined;\n    this.changeFillColor()\n    if (r < 20) {\n      this.dsize = random(0.1);\n    } else {\n      this.dsize = -random(0.1);\n    }\n    this.dragC = 0.00001\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n  \n  edges() {\n    let onEdge = false\n    if (this.pos.y >= height - this.r) {\n      this.pos.y = height - this.r;\n      this.changeFillColor();\n      this.vel.y *= -1;\n      onEdge = true;\n    }\n    if (this.pos.y <= this.r) {\n      this.pos.y = this.r;\n      this.changeFillColor();\n      this.vel.y *= -1;\n      onEdge = true;\n    }\n\n    if (this.pos.x >= width - this.r) {\n      this.pos.x = width - this.r;\n      this.changeFillColor();\n      this.vel.x *= -1;\n      onEdge = true;\n    }\n    if (this.pos.x <= this.r) {\n      this.pos.x = this.r;\n      this.changeFillColor();\n      this.vel.x *= -1;\n      onEdge = true;\n    }\n    if (onEdge) {\n      this.vel.mult(0.9)\n    }\n    return onEdge;\n  }\n  \n  drag() {\n    // Direction of Drag\n    let drag = this.vel.copy();\n    drag.normalize();\n    drag.mult(-1);\n    let speedSq = this.vel.magSq();\n    drag.setMag(this.dragC * speedSq*PI*this.r);\n    \n    this.applyForce(drag);\n  }\n\n  update() {\n    this.drag()\n    this.vel.add(this.acc);\n    this.pos.add(this.vel);\n    this.edges()\n    \n    this.acc.set(0, 0);\n    \n    if (this.r > 35 || this.r < 5) {\n      this.dsize *= -1;\n    }\n    this.r += this.dsize;\n  }\n\n  changeFillColor() {\n    this.fillColor = color(random(255), random(255), random(255), 200);\n  }\n\n  show() {\n    strokeWeight(2);\n    noStroke(255);\n    fill(this.fillColor);\n    ellipse(this.pos.x, this.pos.y, this.r * 2);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64edb723eff86e41fcd2f2fc",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-30T11:39:41.976Z",
+        "updatedAt": "2023-08-30T11:39:41.976Z",
+        "id": "64edb723eff86e41fcd2f2fc"
+      }
+    ],
+    "createdAt": "2023-08-29T09:15:15.870Z",
+    "updatedAt": "2023-08-30T11:39:41.976Z",
+    "id": "Kcy2zQEFB"
+  },
+  {
+    "name": "bubble sort",
+    "_id": "ld-8icLM3",
+    "updatedAt": "2023-08-08T13:43:18.971Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64d239350ae2faeb9fa3bff3",
+          "64d239350ae2faeb9fa3bff2",
+          "64d239350ae2faeb9fa3bff4"
+        ],
+        "fileType": "folder",
+        "_id": "64d239350ae2faeb9fa3bff5",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-08T13:43:18.971Z",
+        "updatedAt": "2023-08-08T13:43:18.971Z",
+        "id": "64d239350ae2faeb9fa3bff5"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let arr;\nlet w;\nlet i;\nlet j;\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  const len = min(floor(width/20), 50)\n  arr = new Array(len).fill(0).map((a) => Math.floor(Math.random() * (height -20)));\n  w = width / arr.length;\n  j = 0;\n  i = 0;\n  textSize(w/2)\n  // frameRate(24)\n}\n\nfunction draw() {\n  background(50);\n  drawArr(i);\n  if (j > arr.length) {\n    drawArr(-1)\n    noLoop();\n    console.log(arr);\n  }\n  if (i >= arr.length - j - 1) {\n    i = 0;\n    j++;\n  }\n  let l = arr[i];\n  let r = arr[i + 1];\n  if (l > r) {\n    arr[i] = r;\n    arr[i + 1] = l;\n  }\n\n  i++;\n}\n\nfunction drawArr(i, j) {\n  for (let k = 0; k < arr.length; k++) {\n    if (k === i) {\n      fill(255, 0, 0);\n    } else {\n      fill(255)\n    }\n    \n    let h = arr[k];\n    let x = k * w;\n    let y = height - h;\n    text(`${arr[k]}`, x+(w*0.1), y-(w*0.1))\n    rect(x, y, w, h);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64d239350ae2faeb9fa3bff2",
+        "isSelectedFile": true,
+        "createdAt": "2023-08-08T13:43:18.971Z",
+        "updatedAt": "2023-08-08T13:43:18.971Z",
+        "id": "64d239350ae2faeb9fa3bff2"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64d239350ae2faeb9fa3bff3",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-08T13:43:18.971Z",
+        "updatedAt": "2023-08-08T13:43:18.971Z",
+        "id": "64d239350ae2faeb9fa3bff3"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64d239350ae2faeb9fa3bff4",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-08T13:43:18.971Z",
+        "updatedAt": "2023-08-08T13:43:18.971Z",
+        "id": "64d239350ae2faeb9fa3bff4"
+      }
+    ],
+    "createdAt": "2023-08-08T13:22:15.492Z",
+    "id": "ld-8icLM3"
+  },
+  {
+    "name": "noc-1.2-random-vector",
+    "_id": "HNTOYAmqK",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64be67b57ce0e540e23b1089",
+          "64be67b57ce0e540e23b108a",
+          "64be67b57ce0e540e23b108b",
+          "64be67b57ce0e540e23b108c"
+        ],
+        "fileType": "folder",
+        "_id": "64be67b57ce0e540e23b1088",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-29T09:15:14.826Z",
+        "updatedAt": "2023-08-29T09:15:14.826Z",
+        "id": "64be67b57ce0e540e23b1088"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let walker \n\nfunction setup() {\n  createCanvas(400, 400);\n  walker = new Walker(width/2, height/2)\n  \n}\n\nfunction draw() {\n  background(0);\n  walker.update()\n  walker.show()\n    \n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be67b57ce0e540e23b108b",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-29T09:15:14.826Z",
+        "updatedAt": "2023-08-29T09:15:14.826Z",
+        "id": "64be67b57ce0e540e23b108b"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n    <script src=\"Walker.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be67b57ce0e540e23b108a",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-29T09:15:14.826Z",
+        "updatedAt": "2023-08-29T09:15:14.826Z",
+        "id": "64be67b57ce0e540e23b108a"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be67b57ce0e540e23b108c",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-29T09:15:14.826Z",
+        "updatedAt": "2023-08-29T09:15:14.826Z",
+        "id": "64be67b57ce0e540e23b108c"
+      },
+      {
+        "name": "Walker.js",
+        "content": "class Walker{\n  constructor(x, y) {\n    this.pos = createVector(x, y)\n    this.vel = p5.Vector.random2D()\n      .mult(random(1, 4))\n  }\n  \n  update() {\n    this.pos.add(this.vel)\n  }\n  \n  show() {\n    stroke(255)\n    fill(255, 100)\n    ellipse(this.pos.x, this.pos.y, 25)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be67b57ce0e540e23b1089",
+        "isSelectedFile": true,
+        "createdAt": "2023-08-29T09:15:14.826Z",
+        "updatedAt": "2023-08-29T09:15:14.826Z",
+        "id": "64be67b57ce0e540e23b1089"
+      }
+    ],
+    "createdAt": "2023-07-24T11:59:49.917Z",
+    "updatedAt": "2023-08-29T09:15:14.826Z",
+    "id": "HNTOYAmqK"
+  },
+  {
+    "name": "noc-1.2",
+    "_id": "3qUp9h2MQ",
+    "updatedAt": "2023-07-24T11:59:33.050Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64be66807ce0e540e23b1087",
+          "64be64cc7ce0e540e23b1084",
+          "64be64cc7ce0e540e23b1083",
+          "64be64cc7ce0e540e23b1085"
+        ],
+        "fileType": "folder",
+        "_id": "64be64cc7ce0e540e23b1086",
+        "isSelectedFile": false,
+        "createdAt": "2023-07-24T11:59:33.049Z",
+        "updatedAt": "2023-07-24T11:59:33.049Z",
+        "id": "64be64cc7ce0e540e23b1086"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let walker \n\nfunction setup() {\n  createCanvas(400, 400);\n  walker = new Walker(width/2, height/2)\n}\n\nfunction draw() {\n  background(0);\n  walker.update()\n  walker.show()\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be64cc7ce0e540e23b1083",
+        "isSelectedFile": false,
+        "createdAt": "2023-07-24T11:59:33.049Z",
+        "updatedAt": "2023-07-24T11:59:33.049Z",
+        "id": "64be64cc7ce0e540e23b1083"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n    <script src=\"Walker.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be64cc7ce0e540e23b1084",
+        "isSelectedFile": false,
+        "createdAt": "2023-07-24T11:59:33.050Z",
+        "updatedAt": "2023-07-24T11:59:33.050Z",
+        "id": "64be64cc7ce0e540e23b1084"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be64cc7ce0e540e23b1085",
+        "isSelectedFile": false,
+        "createdAt": "2023-07-24T11:59:33.050Z",
+        "updatedAt": "2023-07-24T11:59:33.050Z",
+        "id": "64be64cc7ce0e540e23b1085"
+      },
+      {
+        "name": "Walker.js",
+        "content": "class Walker{\n  constructor(x, y) {\n    this.pos = createVector(x, y)\n    this.vel = createVector(1, 0)\n  }\n  \n  update() {\n    this.pos.add(this.vel)\n  }\n  \n  show() {\n    stroke(255)\n    fill(255, 100)\n    ellipse(this.pos.x, this.pos.y, 25)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be66807ce0e540e23b1087",
+        "isSelectedFile": true,
+        "createdAt": "2023-07-24T11:59:33.050Z",
+        "updatedAt": "2023-07-24T11:59:33.050Z",
+        "id": "64be66807ce0e540e23b1087"
+      }
+    ],
+    "createdAt": "2023-07-24T11:59:33.050Z",
+    "id": "3qUp9h2MQ"
+  },
+  {
+    "name": "noc-1.1-random_walker",
+    "_id": "Xg_ywKzUe",
+    "updatedAt": "2023-07-24T12:40:21.430Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64be5dd60e573b001a8633a2",
+          "64be5aa87ce0e540e23b1080",
+          "64be5aa87ce0e540e23b107f",
+          "64be5aa87ce0e540e23b1081"
+        ],
+        "fileType": "folder",
+        "_id": "64be5aa87ce0e540e23b1082",
+        "createdAt": "2023-07-24T12:40:21.430Z",
+        "updatedAt": "2023-07-24T12:40:21.430Z",
+        "isSelectedFile": false,
+        "id": "64be5aa87ce0e540e23b1082"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let walkers = [];\nlet colors;\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  background(0);\n\n  colors = [color(255, 0, 0), color(0, 255, 0), color(0, 0, 255)];\n\n  for (let i = 0; i < 3; i++) {\n    let walker = new Walker(random(width), random(height), colors[i]);\n    walkers.push(walker);\n  }\n}\n\nfunction draw() {\n  for (let walker of walkers) {\n    walker.update();\n    walker.show();\n  }\n}\n\nfunction getRandomColor() {\n  return color(random(255), random(255), random(255));\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be5aa87ce0e540e23b107f",
+        "isSelectedFile": false,
+        "createdAt": "2023-07-24T12:40:21.430Z",
+        "updatedAt": "2023-07-24T12:40:21.430Z",
+        "id": "64be5aa87ce0e540e23b107f"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n    <script src=\"Walker.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be5aa87ce0e540e23b1080",
+        "createdAt": "2023-07-24T12:40:21.430Z",
+        "updatedAt": "2023-07-24T12:40:21.430Z",
+        "isSelectedFile": false,
+        "id": "64be5aa87ce0e540e23b1080"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be5aa87ce0e540e23b1081",
+        "createdAt": "2023-07-24T12:40:21.430Z",
+        "updatedAt": "2023-07-24T12:40:21.430Z",
+        "isSelectedFile": false,
+        "id": "64be5aa87ce0e540e23b1081"
+      },
+      {
+        "name": "Walker.js",
+        "content": "class Walker {\n  constructor(x, y, sColor) {\n    this.pos = createVector(x, y);\n    this.prev = this.pos.copy();\n    // this.sColor = this.getRandomColor();\n    this.sColor  = sColor\n  }\n\n  getRandomColor() {\n    return color(random(255), random(255), random(255));\n  }\n\n  update() {\n    let direction = p5.Vector.random2D()\n      .mult(random(5, 10));\n    if (random()<0.01) {\n      // this.sColor = this.getRandomColor()\n      direction.mult(random(10, 20));\n    }\n    if (this.pos.x < 0 || this.pos.x > width | this.pos.y  < 0 || this.pos.y > height) {\n      this.pos = createVector(random(width), random(height))\n    }\n    this.prev.set(this.pos);\n    this.pos.add(direction);\n  }\n\n  show() {\n    stroke(this.sColor)\n    strokeWeight(1);\n    line(this.prev.x, this.prev.y, this.pos.x, this.pos.y);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64be5dd60e573b001a8633a2",
+        "isSelectedFile": true,
+        "updatedAt": "2023-07-24T12:40:21.430Z",
+        "createdAt": "2023-07-24T12:40:21.430Z",
+        "id": "64be5dd60e573b001a8633a2"
+      }
+    ],
+    "createdAt": "2023-07-24T11:11:04.958Z",
+    "id": "Xg_ywKzUe"
+  },
+  {
+    "name": "noc-I.5-perlin_noise_2d",
+    "_id": "8hOSibOzI",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64bbf5c825a27f2aaaf721bc",
+          "64bbf5c825a27f2aaaf721bd",
+          "64bbf5c825a27f2aaaf721be"
+        ],
+        "fileType": "folder",
+        "_id": "64bbf5c825a27f2aaaf721bb",
+        "createdAt": "2023-07-23T15:26:26.468Z",
+        "updatedAt": "2023-07-23T15:26:26.468Z",
+        "isSelectedFile": false,
+        "id": "64bbf5c825a27f2aaaf721bb"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let inc = 0.01;\nfunction setup() {\n  createCanvas(400, 400);\n  // background(5);\n}\n\nfunction draw() {\n  let yOff = 0;\n\n  loadPixels();\n  for (let y = 0; y < height; y++) {\n    let xOff = 0;\n    for (let x = 0; x < width; x++) {\n      let index = (x + y * width) * 4;\n      let r = noise(xOff, yOff) * 255;\n      pixels[index + 0] = r;\n      pixels[index + 1] = r;\n      pixels[index + 2] = r;\n      pixels[index + 3] = 255;\n\n      xOff += inc;\n    }\n    yOff += inc\n  }\n  updatePixels();\n  // noLoop();\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf5c825a27f2aaaf721bd",
+        "isSelectedFile": true,
+        "createdAt": "2023-07-23T15:26:26.468Z",
+        "updatedAt": "2023-07-23T15:26:26.468Z",
+        "id": "64bbf5c825a27f2aaaf721bd"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf5c825a27f2aaaf721bc",
+        "createdAt": "2023-07-23T15:26:26.468Z",
+        "updatedAt": "2023-07-23T15:26:26.468Z",
+        "isSelectedFile": false,
+        "id": "64bbf5c825a27f2aaaf721bc"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf5c825a27f2aaaf721be",
+        "createdAt": "2023-07-23T15:26:26.468Z",
+        "updatedAt": "2023-07-23T15:26:26.468Z",
+        "isSelectedFile": false,
+        "id": "64bbf5c825a27f2aaaf721be"
+      }
+    ],
+    "createdAt": "2023-07-22T15:29:12.322Z",
+    "updatedAt": "2023-07-23T15:26:26.468Z",
+    "id": "8hOSibOzI"
+  },
+  {
+    "name": "noc-1.4.-perline_noise_graph",
+    "_id": "LZ8ii1CxI",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64bbf20825a27f2aaaf721b8",
+          "64bbf20825a27f2aaaf721b9",
+          "64bbf20825a27f2aaaf721ba"
+        ],
+        "fileType": "folder",
+        "_id": "64bbf20825a27f2aaaf721b7",
+        "createdAt": "2023-07-22T15:29:05.629Z",
+        "updatedAt": "2023-07-22T15:29:05.629Z",
+        "isSelectedFile": false,
+        "id": "64bbf20825a27f2aaaf721b7"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let start = 0\nlet inc = 0.01\nfunction setup() {\n  createCanvas(400, 400);\n  // colorMode(HSB);\n}\n\nfunction draw() {\n  background(5);\n  \n  stroke(255);\n  noFill()\n  beginShape()\n  let xOff = start\n  for (let x = 0; x < width; x++) {\n    // const y = noise(xOff) * height;\n    const n  = noise(xOff)*100\n    const s = map(sin(xOff), -1, 1, 0, height-100)\n    const y = s + n\n    vertex(x, y);\n    xOff += inc;\n  }\n  endShape()\n  start += 0.05\n  // noLoop()\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf20825a27f2aaaf721b9",
+        "isSelectedFile": true,
+        "createdAt": "2023-07-22T15:29:05.629Z",
+        "updatedAt": "2023-07-22T15:29:05.629Z",
+        "id": "64bbf20825a27f2aaaf721b9"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf20825a27f2aaaf721b8",
+        "createdAt": "2023-07-22T15:29:05.629Z",
+        "updatedAt": "2023-07-22T15:29:05.629Z",
+        "isSelectedFile": false,
+        "id": "64bbf20825a27f2aaaf721b8"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf20825a27f2aaaf721ba",
+        "createdAt": "2023-07-22T15:29:05.629Z",
+        "updatedAt": "2023-07-22T15:29:05.629Z",
+        "isSelectedFile": false,
+        "id": "64bbf20825a27f2aaaf721ba"
+      }
+    ],
+    "createdAt": "2023-07-22T15:13:12.995Z",
+    "updatedAt": "2023-07-22T15:29:05.629Z",
+    "id": "LZ8ii1CxI"
+  },
+  {
+    "name": "noc-1.3.-perline_noise",
+    "_id": "a9ldzDYJk",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64bbf0ff25a27f2aaaf721b4",
+          "64bbf0ff25a27f2aaaf721b5",
+          "64bbf0ff25a27f2aaaf721b6"
+        ],
+        "fileType": "folder",
+        "_id": "64bbf0ff25a27f2aaaf721b3",
+        "createdAt": "2023-07-22T15:13:06.314Z",
+        "updatedAt": "2023-07-22T15:13:06.314Z",
+        "isSelectedFile": false,
+        "id": "64bbf0ff25a27f2aaaf721b3"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let xOff = 0;\nlet yOff = 10;\nlet hueOff = 100;\nfunction setup() {\n  createCanvas(400, 400);\n  colorMode(HSB);\n}\n\nfunction draw() {\n  background(5);\n  x = noise(xOff) * width;\n  y = noise(yOff) * height;\n  fill(noise(hueOff)*255, 100, 100);\n  noStroke()\n  ellipse(x, y, 20);\n  xOff += 0.02;\n  yOff += 0.02;\n  hueOff += 0.02;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf0ff25a27f2aaaf721b5",
+        "isSelectedFile": true,
+        "createdAt": "2023-07-22T15:13:06.314Z",
+        "updatedAt": "2023-07-22T15:13:06.314Z",
+        "id": "64bbf0ff25a27f2aaaf721b5"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf0ff25a27f2aaaf721b4",
+        "createdAt": "2023-07-22T15:13:06.314Z",
+        "updatedAt": "2023-07-22T15:13:06.314Z",
+        "isSelectedFile": false,
+        "id": "64bbf0ff25a27f2aaaf721b4"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbf0ff25a27f2aaaf721b6",
+        "createdAt": "2023-07-22T15:13:06.314Z",
+        "updatedAt": "2023-07-22T15:13:06.314Z",
+        "isSelectedFile": false,
+        "id": "64bbf0ff25a27f2aaaf721b6"
+      }
+    ],
+    "createdAt": "2023-07-22T15:08:47.664Z",
+    "updatedAt": "2023-07-22T15:13:06.314Z",
+    "id": "a9ldzDYJk"
+  },
+  {
+    "name": "noc-1.3.-perline_noise",
+    "_id": "-5JuSj1Vg",
+    "updatedAt": "2023-07-22T15:08:41.955Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64bbe9963aef65bb4d1d4268",
+          "64bbe9963aef65bb4d1d4267",
+          "64bbe9963aef65bb4d1d4269"
+        ],
+        "fileType": "folder",
+        "_id": "64bbe9963aef65bb4d1d426a",
+        "createdAt": "2023-07-22T15:08:41.955Z",
+        "updatedAt": "2023-07-22T15:08:41.955Z",
+        "isSelectedFile": false,
+        "id": "64bbe9963aef65bb4d1d426a"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let xOff = 0;\nlet yOff = 10;\nlet hueOff = 100;\nfunction setup() {\n  createCanvas(400, 400);\n  background(155);\n  colorMode(HSB);\n}\n\nfunction draw() {\n  background(220);\n  x = noise(xOff) * width;\n  y = noise(yOff) * height;\n  fill(noise(hueOff)*255, 100, 100);\n  ellipse(x, y, 50);\n  xOff += 0.01;\n  yOff += 0.01;\n  hueOff += 0.01;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbe9963aef65bb4d1d4267",
+        "isSelectedFile": true,
+        "createdAt": "2023-07-22T15:08:41.955Z",
+        "updatedAt": "2023-07-22T15:08:41.955Z",
+        "id": "64bbe9963aef65bb4d1d4267"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbe9963aef65bb4d1d4268",
+        "createdAt": "2023-07-22T15:08:41.955Z",
+        "updatedAt": "2023-07-22T15:08:41.955Z",
+        "isSelectedFile": false,
+        "id": "64bbe9963aef65bb4d1d4268"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64bbe9963aef65bb4d1d4269",
+        "createdAt": "2023-07-22T15:08:41.955Z",
+        "updatedAt": "2023-07-22T15:08:41.955Z",
+        "isSelectedFile": false,
+        "id": "64bbe9963aef65bb4d1d4269"
+      }
+    ],
+    "createdAt": "2023-07-22T14:54:24.452Z",
+    "id": "-5JuSj1Vg"
+  },
+  {
+    "name": "BST",
+    "_id": "dt13XkZJq",
+    "updatedAt": "2023-06-28T15:40:44.034Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "649c335fccc20e001aef2d49",
+          "649c3359ccc20e001aef2d1a",
+          "649c2d5af1d78565c055f7ef",
+          "649c2d5af1d78565c055f7ee",
+          "649c2d5af1d78565c055f7f0"
+        ],
+        "fileType": "folder",
+        "_id": "649c2d5af1d78565c055f7f1",
+        "createdAt": "2023-06-28T15:40:44.034Z",
+        "updatedAt": "2023-06-28T15:40:44.034Z",
+        "isSelectedFile": false,
+        "id": "649c2d5af1d78565c055f7f1"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let tree = new Tree();\n\nfunction setup() {\n  noCanvas()\n  for (let i = 0; i < 10; i++) {\n    tree.addValue(floor(random(10)))\n  }\n  tree.traverse()\n  tree.search(5)\n}\n\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "649c2d5af1d78565c055f7ee",
+        "isSelectedFile": false,
+        "createdAt": "2023-06-28T15:40:44.034Z",
+        "updatedAt": "2023-06-28T15:40:44.034Z",
+        "id": "649c2d5af1d78565c055f7ee"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"Node.js\"></script>\n    <script src=\"Tree.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "649c2d5af1d78565c055f7ef",
+        "createdAt": "2023-06-28T15:40:44.034Z",
+        "updatedAt": "2023-06-28T15:40:44.034Z",
+        "isSelectedFile": false,
+        "id": "649c2d5af1d78565c055f7ef"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "649c2d5af1d78565c055f7f0",
+        "createdAt": "2023-06-28T15:40:44.034Z",
+        "updatedAt": "2023-06-28T15:40:44.034Z",
+        "isSelectedFile": false,
+        "id": "649c2d5af1d78565c055f7f0"
+      },
+      {
+        "name": "Tree.js",
+        "content": "class Tree {\n  constructor() {    \n    this.root = null\n  }\n  \n  addValue(n) {\n    let node = new Node(n)\n    if (this.root === null) {\n      this.root = node\n    } else {\n      this.root.addNode(node)\n      \n    }\n  }\n  \n  traverse() {\n    this.root.visit()\n  }\n  \n  search (val) {\n    let found = this.root.search(val)\n    if (found !== null) {\n      console.log(\"Found: \" + val)\n    } else {\n      console.log(\"Not found\")\n    }\n    \n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "649c3359ccc20e001aef2d1a",
+        "isSelectedFile": true,
+        "updatedAt": "2023-06-28T15:40:44.034Z",
+        "createdAt": "2023-06-28T15:40:44.034Z",
+        "id": "649c3359ccc20e001aef2d1a"
+      },
+      {
+        "name": "Node.js",
+        "content": "class Node {\n  constructor(val) {\n    this.value = val;\n    this.left = null\n    this.right  = null;\n  }\n  \n  addNode(n) {\n    if (n.value < this.value) {\n      if (this.left == null) {\n        this.left = n\n      } else {      \n        this.left.addNode(n)\n      }\n    } else if (n.value > this.value) {\n      if (this.right == null) {\n        this.right = n\n      } else {      \n        this.right.addNode(n)\n      }\n    }\n  }\n\n  visit() {\n    if (this.left !== null) {\n      this.left.visit()      \n    }\n    console.log(this.value)\n    if (this.right !== null) {\n      this.right.visit()    \n    }\n  }\n  \n  search(val) {\n    if (val < this.value && this.left !== null) {\n      return this.left.search(val)\n    } else if (val > this.value && this.right !== null) {\n      return this.right.search(val)\n    } else if (this.value === val) {\n      return this\n    }\n    return null\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "649c335fccc20e001aef2d49",
+        "isSelectedFile": false,
+        "updatedAt": "2023-06-28T15:40:44.034Z",
+        "createdAt": "2023-06-28T15:40:44.034Z",
+        "id": "649c335fccc20e001aef2d49"
+      }
+    ],
+    "createdAt": "2023-06-28T12:54:53.991Z",
+    "id": "dt13XkZJq"
+  },
+  {
+    "name": "mobilenet webcam",
+    "_id": "8aswVFeiq",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "64400b10199ed36b4147d0d5",
+          "64400b10199ed36b4147d0d7",
+          "64400b10199ed36b4147d0d8",
+          "64400b10199ed36b4147d0d9",
+          "64400b10199ed36b4147d0da",
+          "64400b10199ed36b4147d0db"
+        ],
+        "fileType": "folder",
+        "_id": "64400b10199ed36b4147d0d4",
+        "isSelectedFile": false,
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0d4"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mobilenet;\nlet video;\nlet label = \"\";\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  background(133);\n  video = createCapture(VIDEO);\n  mobilenet = ml5.imageClassifier(\"MobileNet\", video, modelLoaded);\n  video.hide();\n}\n\nfunction modelLoaded() {\n  console.log(\"Model Loaded\");\n  mobilenet.predict(gotResults);\n}\n\nfunction gotResults(err, result) {\n  if (err) {\n    console.error(err);\n  } else {\n    // console.log(result);\n    label = result[0].label;\n    mobilenet.predict(gotResults);\n  }\n}\n\nfunction draw() {\n  background(0)\n  image(video, 0, 0);\n  fill(255);\n  textSize(20);\n  text(label, 10, height - 12);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400b10199ed36b4147d0d9",
+        "isSelectedFile": true,
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0d9"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js\"></script>\n    <script src=\"https://unpkg.com/ml5@latest/dist/ml5.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400b10199ed36b4147d0d7",
+        "isSelectedFile": false,
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0d7"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400b10199ed36b4147d0da",
+        "isSelectedFile": false,
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0da"
+      },
+      {
+        "name": "images",
+        "content": "",
+        "children": ["64400b10199ed36b4147d0d6"],
+        "fileType": "folder",
+        "_id": "64400b10199ed36b4147d0d5",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0d5"
+      },
+      {
+        "name": "puffin.jpg",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400b10199ed36b4147d0d8",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/8abde00a-b5b4-44df-8eab-0c4b7adef973.jpg",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0d8"
+      },
+      {
+        "name": "puffin.jpeg",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400b10199ed36b4147d0d6",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/411087a6-2e0c-45a2-82ec-bb5ef3e9a914.jpeg",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0d6"
+      },
+      {
+        "name": "wolf.jpg",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400b10199ed36b4147d0db",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/5c9f5f21-86d5-4b8f-ba58-c611775dbf95.jpg",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:53:48.302Z",
+        "createdAt": "2023-04-19T15:53:48.302Z",
+        "id": "64400b10199ed36b4147d0db"
+      }
+    ],
+    "createdAt": "2023-04-19T15:38:57.824Z",
+    "updatedAt": "2023-04-19T15:53:48.302Z",
+    "id": "8aswVFeiq"
+  },
+  {
+    "name": "mobilenet",
+    "_id": "kGFMsUXmC",
+    "updatedAt": "2023-04-19T15:38:41.325Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "644006679dc725001aa1563f",
+          "644004a2199ed36b4147d0d1",
+          "644006888a3d4a001c6c722e",
+          "644004a2199ed36b4147d0d0",
+          "644004a2199ed36b4147d0d2",
+          "64400ad300d33b001a1a64c4"
+        ],
+        "fileType": "folder",
+        "_id": "644004a2199ed36b4147d0d3",
+        "isSelectedFile": false,
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "id": "644004a2199ed36b4147d0d3"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mobilenet;\nlet puffin;\n\nfunction preload() {\n  puffin = loadImage(\"wolf.jpg\");\n}\n\nfunction setup() {\n  createCanvas(400, 400);\n  background(133);\n  mobilenet = ml5.imageClassifier(\"MobileNet\", modelLoaded);\n  image(puffin, 0, 0, width, height);\n  \n}\n\nfunction modelLoaded() {\n  console.log(\"Model Loaded\");\n  mobilenet.predict(puffin, gotResults);\n}\n\nfunction gotResults(err, result) {\n  if (err) {\n    console.error(err)\n  } else {\n    console.log(result)\n    let label = result[0].label\n    fill(255)\n    textSize(64)\n    text(label, 10, height -50)\n    \n  }\n}\n\nfunction draw() {}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "644004a2199ed36b4147d0d0",
+        "isSelectedFile": true,
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "id": "644004a2199ed36b4147d0d0"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js\"></script>\n    <script src=\"https://unpkg.com/ml5@latest/dist/ml5.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "644004a2199ed36b4147d0d1",
+        "isSelectedFile": false,
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "id": "644004a2199ed36b4147d0d1"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "644004a2199ed36b4147d0d2",
+        "isSelectedFile": false,
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "id": "644004a2199ed36b4147d0d2"
+      },
+      {
+        "name": "images",
+        "content": "",
+        "children": ["64400740c4bfec001b9064bc"],
+        "fileType": "folder",
+        "_id": "644006679dc725001aa1563f",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "id": "644006679dc725001aa1563f"
+      },
+      {
+        "name": "puffin.jpg",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "644006888a3d4a001c6c722e",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/7dfca6ce-1ee5-4587-a8cc-6798b4f3be90.jpg",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "id": "644006888a3d4a001c6c722e"
+      },
+      {
+        "name": "puffin.jpeg",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400740c4bfec001b9064bc",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/b6fcc50a-c732-4456-b1ed-f5d316639341.jpeg",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "id": "64400740c4bfec001b9064bc"
+      },
+      {
+        "name": "wolf.jpg",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "64400ad300d33b001a1a64c4",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/28c76c0d-a71b-4d80-904f-527d55603bc1.jpg",
+        "isSelectedFile": false,
+        "updatedAt": "2023-04-19T15:38:41.325Z",
+        "createdAt": "2023-04-19T15:38:41.325Z",
+        "id": "64400ad300d33b001a1a64c4"
+      }
+    ],
+    "createdAt": "2023-04-19T15:12:58.600Z",
+    "id": "kGFMsUXmC"
+  },
+  {
+    "name": "pixel-paint",
+    "_id": "9Pt1C-nN4",
+    "updatedAt": "2022-12-24T03:33:06.946Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63a59d474a0a357200b70749",
+          "63a59d474a0a357200b70748",
+          "63a59d474a0a357200b7074a"
+        ],
+        "fileType": "folder",
+        "_id": "63a59d474a0a357200b7074b",
+        "createdAt": "2022-12-24T03:33:06.946Z",
+        "updatedAt": "2022-12-24T03:33:06.946Z",
+        "isSelectedFile": false,
+        "id": "63a59d474a0a357200b7074b"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let res = 10;\nlet pixelsArr = new Array(res * res).fill(255);\nlet edge;\nlet toPaint = true;\n\nlet colorPicker;\nlet resetBtn;\nlet saveBtn;\n\nfunction setup() {\n  colorPicker = createColorPicker(\"#000000\");\n  resetBtn = createButton(\"Reset\");\n  saveBtn = createButton(\"Save\");\n\n  resetBtn.mousePressed(() => {\n    pixelsArr = new Array(res * res).fill(255);\n    drawPixels();\n  });\n\n  saveBtn.mousePressed(() => {\n    saveCanvas();\n  });\n  const canvasDim = floor(min(windowWidth, windowHeight) / res) * res - 100;\n\n  createCanvas(canvasDim, canvasDim);\n  edge = floor(min(width, height) / res);\n  console.log(edge);\n  drawPixels();\n}\n\n// function draw() {\n//   // background(0)\n//   mouseToGridPos()\n// }\n\nfunction mouseClicked() {\n  const [x, y] = mouseToGridPos();\n  const index = gridToArrayIndex(x, y);\n  if (pixelsArr[index] != 255) {\n    toPaint = false;\n  } else {\n    toPaint = true;\n  }\n  togglePixels(toPaint);\n}\n\nfunction mouseDragged() {\n  togglePixels(toPaint);\n}\n\nfunction gridToArrayIndex(x, y) {\n  return x * res + y;\n}\n\nfunction mouseToGridPos() {\n  let mX = mouseX;\n  let mY = mouseY;\n\n  if (mX < 0 || mX > width || mY < 0 || mY > height) return [null, null];\n  let x = floor(mouseX / edge);\n  let y = floor(mouseY / edge);\n\n  // Calculating center of rect\n  let rectX = x * edge + edge / 2;\n  let rectY = y * edge + edge / 2;\n  // ellipse(rectX, rectY, 30)\n  let distX = abs(mX - rectX);\n  let distY = abs(mY - rectY);\n  // console.log(distX, distY)\n  if (distX < edge / 3 && distY < edge / 3 && x >= 0 && y >= 0) {\n    // console.log(\"yes\")\n    return [x, y];\n  } else {\n    return [null, null];\n  }\n}\n\nfunction togglePixels(toPaint) {\n  const [x, y] = mouseToGridPos();\n  if (x == null || y == null) return;\n  const i = gridToArrayIndex(x, y);\n  if (i > res * res || i < 0) {\n    return;\n  }\n  if (toPaint) {\n    pixelsArr[i] = colorPicker.color();\n  } else {\n    pixelsArr[i] = 255;\n  }\n  drawPixels();\n}\n\nfunction drawPixels() {\n  for (let i = 0; i < pixelsArr.length; i++) {\n    fill(pixelsArr[i]);\n    let y = i % res;\n    let x = floor(i / res);\n    rect(x * edge, y * edge, edge, edge);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a59d474a0a357200b70748",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-24T03:33:06.946Z",
+        "updatedAt": "2022-12-24T03:33:06.946Z",
+        "id": "63a59d474a0a357200b70748"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a59d474a0a357200b70749",
+        "createdAt": "2022-12-24T03:33:06.946Z",
+        "updatedAt": "2022-12-24T03:33:06.946Z",
+        "isSelectedFile": false,
+        "id": "63a59d474a0a357200b70749"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n  touch-action: none;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  justify-content: center\n}\ncanvas {\n  display: block;\n  margin: 0 auto;\n}\n\nbutton {\n  height: 1.5rem\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a59d474a0a357200b7074a",
+        "createdAt": "2022-12-24T03:33:06.946Z",
+        "updatedAt": "2022-12-24T03:33:06.946Z",
+        "isSelectedFile": false,
+        "id": "63a59d474a0a357200b7074a"
+      }
+    ],
+    "createdAt": "2022-12-23T12:21:45.526Z",
+    "id": "9Pt1C-nN4"
+  },
+  {
+    "name": "gameoflife-1",
+    "_id": "wvEXCr2ux",
+    "updatedAt": "2022-12-22T11:29:25.127Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63a439ae51be5126a73ff724",
+          "63a439ae51be5126a73ff723",
+          "63a439ae51be5126a73ff725"
+        ],
+        "fileType": "folder",
+        "_id": "63a439ae51be5126a73ff726",
+        "createdAt": "2022-12-22T11:29:25.127Z",
+        "updatedAt": "2022-12-22T11:29:25.127Z",
+        "id": "63a439ae51be5126a73ff726"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let res = 50;\nlet length;\nlet slider;\n\nfunction setup() {\n  createCanvas(400, 400);\n  // frameRate(1)\n  slider = createSlider(0, 100, 10, 1)\n  noStroke()\n  ellipseMode(CORNER)\n\n}\n\nfunction draw() {\n  background(51);\n  res = slider.value()\n  length = floor(min(width, height) / res);\n  for (let i = 0; i < res; i++) {\n    for (let j = 0; j < res; j++) {\n      if (\n        (mouseX < i*length + length && mouseX > i*length) &&\n        (mouseY < j*length + length && mouseY > j*length)\n      ) {\n        fill(0)\n      } else {\n        fill(255)\n      }\n      ellipse(i * length, j * length, length-1, length-1);\n    }\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a439ae51be5126a73ff723",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-22T11:29:25.127Z",
+        "updatedAt": "2022-12-22T11:29:25.127Z",
+        "id": "63a439ae51be5126a73ff723"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a439ae51be5126a73ff724",
+        "createdAt": "2022-12-22T11:29:25.127Z",
+        "updatedAt": "2022-12-22T11:29:25.127Z",
+        "id": "63a439ae51be5126a73ff724"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a439ae51be5126a73ff725",
+        "createdAt": "2022-12-22T11:29:25.127Z",
+        "updatedAt": "2022-12-22T11:29:25.127Z",
+        "id": "63a439ae51be5126a73ff725"
+      }
+    ],
+    "createdAt": "2022-12-22T11:04:28.074Z",
+    "id": "wvEXCr2ux"
+  },
+  {
+    "name": "Sound Visualization Bar File",
+    "_id": "0DVxYc-MH",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63a185ef6abe020643f69575",
+          "63a185ef6abe020643f69576",
+          "63a185ef6abe020643f69577",
+          "63a185ef6abe020643f69578"
+        ],
+        "fileType": "folder",
+        "_id": "63a185ef6abe020643f69574",
+        "createdAt": "2022-12-20T12:44:53.894Z",
+        "updatedAt": "2022-12-20T12:44:53.894Z",
+        "isSelectedFile": false,
+        "id": "63a185ef6abe020643f69574"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let fft;\nlet hue = 0;\nlet degree = 360;\n\nlet forward;\nlet backward;\nlet radiusSlider;\nlet inputFile;\nlet song;\nlet amp;\nlet stop;\nlet len;\n// let button;\nlet rainbow = 0;\nlet clrIncr = 0.2;\n\nlet innerR;\n\nfunction setup() {\n  frameRate(24)\n  createCanvas(windowWidth, windowHeight);\n  len = min(width, height);\n  radiusSlider = createSlider(0, len / 3, len / (3 * 3));\n  radiusSlider.position(0, height - 25);\n  \n  forward = createButton(\">>\")\n  backward = createButton(\"<<\")\n  forward.position(width/2 + 25, height-25)\n  backward.position(width/2 - 25, height-25)\n  \n  forward.mousePressed(()=> {\n    if (song) {\n      song.jump(song.currentTime() + 5)\n    }  \n  })\n  backward.mousePressed(()=> {\n    if (song) {\n      song.jump(song.currentTime() - 5)\n    }  \n  })\n  stop = createButton(\"pause\");\n  //   button = createButton(\"start\")\n  //   button.position()\n\n  //   button.mousePressed(() => {\n  //     userStartAudio()\n  //   })\n  stop.position(width - 55, height - 25);\n  stop.mousePressed(() => {\n    if (song.isPlaying()) song.stop();\n  });\n  inputFile = createFileInput((file) => {\n    if (song) {\n      song.stop();\n      console.log(\"song stopping?\");\n    }\n    if (file.type == \"audio\") {\n      song = loadSound(file.data, () => {\n        song.loop();\n        song.setVolume(1);\n      });\n    } else {\n      song = null;\n      // seekSlider = null;\n    }\n  });\n  inputFile.position(0, 0);\n  angleMode(DEGREES);\n  fft = new p5.FFT(0.8, 32);\n  fft.setInput(song);\n  amp = new p5.Amplitude();\n}\n\nfunction draw() {\n  colorMode(RGB);\n  background(0);\n  let spectrum = fft.analyze();\n  translate(width / 2, height / 2);\n  stroke(255);\n  rotate(degree);\n  if (song) {\n    degree = map(song.currentTime(), 0, song.duration(), 0, 360);\n  }\n  if (degree < 0) degree = 360;\n  for (let i = 0; i < spectrum.length; i++) {\n    let angle = map(i, 0, spectrum.length, 0, 360);\n    let amplitude = spectrum[i];\n    let r = map(amplitude, 0, 255, 0, len / 3);\n    // r = len/3\n    let x = r * cos(angle);\n    let y = r * sin(angle);\n    // hue = map(angle, 0, 360, rainbow, rainbow + 32);\n    rainbow += clrIncr;\n    if (rainbow > 255 || rainbow < 0) {\n      clrIncr *= -1\n      rainbow = random(255);\n    }\n    colorMode(HSB);\n    let strokeColor = color(rainbow + spectrum[i], 255, 255);\n    stroke(strokeColor);\n    // hue += 2\n    // if (hue > 255) {\n    //   hue = 0\n    // }\n    strokeWeight(8);\n    // strokeCap(SQUARE);\n\n    let level = amp.getLevel();\n    let innerR = map(level, 0, 1, radiusSlider.value(), len / 4);\n    if (r > innerR) {\n      line(innerR * cos(angle), innerR * sin(angle), x, y);\n    }\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a185ef6abe020643f69577",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-20T12:44:53.894Z",
+        "updatedAt": "2022-12-20T12:44:53.894Z",
+        "id": "63a185ef6abe020643f69577"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a185ef6abe020643f69575",
+        "createdAt": "2022-12-20T12:44:53.894Z",
+        "updatedAt": "2022-12-20T12:44:53.894Z",
+        "isSelectedFile": false,
+        "id": "63a185ef6abe020643f69575"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n  color: gray;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a185ef6abe020643f69578",
+        "createdAt": "2022-12-20T12:44:53.894Z",
+        "updatedAt": "2022-12-20T12:44:53.894Z",
+        "isSelectedFile": false,
+        "id": "63a185ef6abe020643f69578"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a185ef6abe020643f69576",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/562fa8ea-a527-40d5-b7e0-721e577e88b7.mp3",
+        "updatedAt": "2022-12-20T12:44:53.894Z",
+        "createdAt": "2022-12-20T12:44:53.894Z",
+        "isSelectedFile": false,
+        "id": "63a185ef6abe020643f69576"
+      }
+    ],
+    "createdAt": "2022-12-20T09:52:49.170Z",
+    "updatedAt": "2022-12-20T12:44:53.894Z",
+    "id": "0DVxYc-MH"
+  },
+  {
+    "name": "Sound Visualization Bar copy copy",
+    "_id": "8SBbGl8vd",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63a137601f90bd202ae2df2f",
+          "63a137601f90bd202ae2df30",
+          "63a137601f90bd202ae2df31",
+          "63a137601f90bd202ae2df32"
+        ],
+        "fileType": "folder",
+        "_id": "63a137601f90bd202ae2df2e",
+        "createdAt": "2022-12-20T09:52:45.357Z",
+        "updatedAt": "2022-12-20T09:52:45.357Z",
+        "isSelectedFile": false,
+        "id": "63a137601f90bd202ae2df2e"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mic;\nlet fft;\nlet hue = 0;\nlet degree = 360;\nlet slider;\nlet button;\nlet start = false;\nlet inputFile;\n\nfunction setup() {\n  slider = createSlider(0, width, 50);\n  button = createButton(\"start\");\n  inputFile = createFileInput(haneleFile)\n  createCanvas(512, 512);\n  colorMode(HSB);\n  angleMode(DEGREES);\n  button.mousePressed(() => {\n    mic = new p5.AudioIn();\n    mic.start();\n    console.log(\"started\");\n    fft = new p5.FFT(0.8, 32);\n    fft.setInput(mic);\n    start = true;\n  });\n}\n\nfunction draw() {\n  background(0);\n  if (start) {\n    let spectrum = fft.analyze();\n    translate(width / 2, height / 2);\n    stroke(255);\n    rotate(degree);\n    degree--;\n    if (degree < 0) degree = 360;\n    for (let i = 0; i < spectrum.length; i++) {\n      let angle = map(i, 0, spectrum.length, 0, 360);\n      let amplitude = spectrum[i];\n      let r = map(amplitude, 0, 255, 0, width / 2);\n      let x = r * cos(angle);\n      let y = r * sin(angle);\n      hue = map(angle, 0, 360, 0, 255);\n      stroke(hue++, 255, 255);\n      strokeWeight(8);\n      strokeCap(SQUARE);\n      if (r > slider.value()) {\n        line(slider.value() * cos(angle), slider.value() * sin(angle), x, y);\n      }\n    }\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a137601f90bd202ae2df31",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-20T09:52:45.357Z",
+        "updatedAt": "2022-12-20T09:52:45.357Z",
+        "id": "63a137601f90bd202ae2df31"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a137601f90bd202ae2df2f",
+        "createdAt": "2022-12-20T09:52:45.357Z",
+        "updatedAt": "2022-12-20T09:52:45.357Z",
+        "isSelectedFile": false,
+        "id": "63a137601f90bd202ae2df2f"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a137601f90bd202ae2df32",
+        "createdAt": "2022-12-20T09:52:45.357Z",
+        "updatedAt": "2022-12-20T09:52:45.357Z",
+        "isSelectedFile": false,
+        "id": "63a137601f90bd202ae2df32"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a137601f90bd202ae2df30",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/7e7fb945-5a4c-4c62-8702-c2cf2a4f55db.mp3",
+        "updatedAt": "2022-12-20T09:52:45.357Z",
+        "createdAt": "2022-12-20T09:52:45.357Z",
+        "isSelectedFile": false,
+        "id": "63a137601f90bd202ae2df30"
+      }
+    ],
+    "createdAt": "2022-12-20T04:17:38.529Z",
+    "updatedAt": "2022-12-20T09:52:45.357Z",
+    "id": "8SBbGl8vd"
+  },
+  {
+    "name": "Sound Visualization Bar copy",
+    "_id": "3Zgjp-87x",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63a135441f90bd202ae2df2a",
+          "63a135441f90bd202ae2df2b",
+          "63a135441f90bd202ae2df2c",
+          "63a135441f90bd202ae2df2d"
+        ],
+        "fileType": "folder",
+        "_id": "63a135441f90bd202ae2df29",
+        "createdAt": "2022-12-20T04:17:33.629Z",
+        "updatedAt": "2022-12-20T04:17:33.629Z",
+        "isSelectedFile": false,
+        "id": "63a135441f90bd202ae2df29"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mic;\nlet fft;\n\nfunction setup() {\n  createCanvas(512, 512);\n  colorMode(HSB)\n  angleMode(DEGREES)\n  mic = new p5.AudioIn();\n  mic.start();\n\n  fft = new p5.FFT(0.9, 64);\n  fft.setInput(mic);\n}\n\nfunction draw() {\n  background(0);\n  let spectrum = fft.analyze();\n  translate(width/2, height/2)\n  beginShape()\n  // noFill()\n  stroke(255)\n  for (let i = 0; i < spectrum.length; i++) {\n    let angle = map(i, 0, spectrum.length, 0, 360)\n    let amplitude = spectrum[i];\n    let r = map(amplitude, 0, 256, 40, 200)\n    let x = r * cos(angle)\n    let y = r * sin(angle)\n    \n    \n    fill(map(i, 0, spectrum.length, 0, 255), 255, 255)\n    vertex(x, y)\n    //rect(i*w, y, w - 5, height - y)\n  }\n  endShape()\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a135441f90bd202ae2df2c",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-20T04:17:33.629Z",
+        "updatedAt": "2022-12-20T04:17:33.629Z",
+        "id": "63a135441f90bd202ae2df2c"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a135441f90bd202ae2df2a",
+        "createdAt": "2022-12-20T04:17:33.629Z",
+        "updatedAt": "2022-12-20T04:17:33.629Z",
+        "isSelectedFile": false,
+        "id": "63a135441f90bd202ae2df2a"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a135441f90bd202ae2df2d",
+        "createdAt": "2022-12-20T04:17:33.629Z",
+        "updatedAt": "2022-12-20T04:17:33.629Z",
+        "isSelectedFile": false,
+        "id": "63a135441f90bd202ae2df2d"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a135441f90bd202ae2df2b",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/f794efcc-59ad-4afb-85f2-968de5d8ce57.mp3",
+        "updatedAt": "2022-12-20T04:17:33.629Z",
+        "createdAt": "2022-12-20T04:17:33.629Z",
+        "isSelectedFile": false,
+        "id": "63a135441f90bd202ae2df2b"
+      }
+    ],
+    "createdAt": "2022-12-20T04:08:39.566Z",
+    "updatedAt": "2022-12-20T04:17:33.629Z",
+    "id": "3Zgjp-87x"
+  },
+  {
+    "name": "Sound Visualization Bar",
+    "_id": "qcSGdNAWk",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63a1303db60de31a78ab2521",
+          "63a1303db60de31a78ab2522",
+          "63a1303db60de31a78ab2523",
+          "63a1303db60de31a78ab2524"
+        ],
+        "fileType": "folder",
+        "_id": "63a1303db60de31a78ab2520",
+        "createdAt": "2022-12-20T04:08:34.209Z",
+        "updatedAt": "2022-12-20T04:08:34.209Z",
+        "isSelectedFile": false,
+        "id": "63a1303db60de31a78ab2520"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mic;\nlet fft;\nlet w\nlet volHistory = [];\n\nfunction setup() {\n  createCanvas(512, 512);\n  colorMode(HSB)\n  mic = new p5.AudioIn();\n  mic.start();\n\n  fft = new p5.FFT(0.9, 64);\n  fft.setInput(mic);\n  w = (width / 64)\n}\n\nfunction draw() {\n  background(0);\n  let spectrum = fft.analyze();\n  noStroke()\n  for (let i = 0; i < spectrum.length; i++) {\n    let amplitude = spectrum[i];\n    let y = map(amplitude, 0, 256, height, 0)\n    fill(map(i, 0, spectrum.length, 0, 255), 255, 255)\n    rect(i*w, y, w - 5, height - y)\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a1303db60de31a78ab2523",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-20T04:08:34.209Z",
+        "updatedAt": "2022-12-20T04:08:34.209Z",
+        "id": "63a1303db60de31a78ab2523"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a1303db60de31a78ab2521",
+        "createdAt": "2022-12-20T04:08:34.209Z",
+        "updatedAt": "2022-12-20T04:08:34.209Z",
+        "isSelectedFile": false,
+        "id": "63a1303db60de31a78ab2521"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a1303db60de31a78ab2524",
+        "createdAt": "2022-12-20T04:08:34.209Z",
+        "updatedAt": "2022-12-20T04:08:34.209Z",
+        "isSelectedFile": false,
+        "id": "63a1303db60de31a78ab2524"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63a1303db60de31a78ab2522",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/2da6cbd1-a60d-4c30-8443-db9e9d509776.mp3",
+        "updatedAt": "2022-12-20T04:08:34.209Z",
+        "createdAt": "2022-12-20T04:08:34.209Z",
+        "isSelectedFile": false,
+        "id": "63a1303db60de31a78ab2522"
+      }
+    ],
+    "createdAt": "2022-12-20T03:47:11.521Z",
+    "updatedAt": "2022-12-20T04:08:34.209Z",
+    "id": "qcSGdNAWk"
+  },
+  {
+    "name": "p5.Vector.2D",
+    "_id": "ZH3lRG89R",
+    "updatedAt": "2022-12-17T13:48:26.767Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "639dbf820d2b6e89ee4ad109",
+          "639dbf820d2b6e89ee4ad108",
+          "639dbf820d2b6e89ee4ad10a"
+        ],
+        "fileType": "folder",
+        "_id": "639dbf820d2b6e89ee4ad10b",
+        "createdAt": "2022-12-17T13:48:26.767Z",
+        "updatedAt": "2022-12-17T13:48:26.767Z",
+        "isSelectedFile": false,
+        "id": "639dbf820d2b6e89ee4ad10b"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n  background(0)\n}\n\nfunction draw() {\n  background(0)\n  let pos = createVector(200, 200)\n  let mouse = createVector(mouseX, mouseY)\n  let v = p5.Vector.sub(mouse, pos)\n  // v.normalize()\n  // v.mult(50)\n  v.setMag(50)  \n  translate(width /2 , height/2)\n  strokeWeight(4)\n  stroke(255)\n  line(0, 0, v.x, v.y)\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "639dbf820d2b6e89ee4ad108",
+        "isSelectedFile": true,
+        "createdAt": "2022-12-17T13:48:26.767Z",
+        "updatedAt": "2022-12-17T13:48:26.767Z",
+        "id": "639dbf820d2b6e89ee4ad108"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "639dbf820d2b6e89ee4ad109",
+        "createdAt": "2022-12-17T13:48:26.767Z",
+        "updatedAt": "2022-12-17T13:48:26.767Z",
+        "isSelectedFile": false,
+        "id": "639dbf820d2b6e89ee4ad109"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "639dbf820d2b6e89ee4ad10a",
+        "createdAt": "2022-12-17T13:48:26.767Z",
+        "updatedAt": "2022-12-17T13:48:26.767Z",
+        "isSelectedFile": false,
+        "id": "639dbf820d2b6e89ee4ad10a"
+      }
+    ],
+    "createdAt": "2022-12-17T13:11:41.949Z",
+    "id": "ZH3lRG89R"
+  },
+  {
+    "name": "MIcrophone Graph Radial",
+    "_id": "dwFP8egp8",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63736acb89d8dc825c9f3217",
+          "63736acb89d8dc825c9f3218",
+          "63736acb89d8dc825c9f3219",
+          "63736acb89d8dc825c9f321a"
+        ],
+        "fileType": "folder",
+        "_id": "63736acb89d8dc825c9f3216",
+        "createdAt": "2022-11-15T10:33:01.909Z",
+        "updatedAt": "2022-11-15T10:33:01.909Z",
+        "id": "63736acb89d8dc825c9f3216"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mic;\nlet volHistory = [];\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  mic = new p5.AudioIn();\n  mic.start();\n}\n\nfunction draw() {\n  background(0);\n  let vol = mic.getLevel()\n  \n  text(vol, 0, 10)\n  \n  volHistory.push(vol)\n  stroke(255)\n  noFill();\n  beginShape()\n  for (let i = 0; i < volHistory.length; i++) {\n    let y = map(volHistory[i], 0, 1, height-(height/3), 0)\n    vertex(i*2, y)\n  }\n  endShape()\n  if (volHistory.length > width/2) {\n    volHistory.splice(0, 1)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "63736acb89d8dc825c9f3219",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-15T10:33:01.909Z",
+        "updatedAt": "2022-11-15T10:33:01.909Z",
+        "id": "63736acb89d8dc825c9f3219"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63736acb89d8dc825c9f3217",
+        "createdAt": "2022-11-15T10:33:01.909Z",
+        "updatedAt": "2022-11-15T10:33:01.909Z",
+        "id": "63736acb89d8dc825c9f3217"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63736acb89d8dc825c9f321a",
+        "createdAt": "2022-11-15T10:33:01.909Z",
+        "updatedAt": "2022-11-15T10:33:01.909Z",
+        "id": "63736acb89d8dc825c9f321a"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63736acb89d8dc825c9f3218",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/0c6bcfac-a343-46b6-a1ff-d9bc1cc30e15.mp3",
+        "updatedAt": "2022-11-15T10:33:01.909Z",
+        "createdAt": "2022-11-15T10:33:01.909Z",
+        "id": "63736acb89d8dc825c9f3218"
+      }
+    ],
+    "createdAt": "2022-11-15T10:32:45.555Z",
+    "updatedAt": "2022-11-15T10:33:01.909Z",
+    "id": "dwFP8egp8"
+  },
+  {
+    "name": "MIcrophone Graph",
+    "_id": "3CJOn3zPk",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6372431005d51046eb638c9c",
+          "6372431005d51046eb638c9d",
+          "6372431005d51046eb638c9e",
+          "6372431005d51046eb638c9f"
+        ],
+        "fileType": "folder",
+        "_id": "6372431005d51046eb638c9b",
+        "createdAt": "2022-11-14T13:34:36.328Z",
+        "updatedAt": "2022-11-14T13:34:36.328Z",
+        "id": "6372431005d51046eb638c9b"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mic;\nlet volHistory = [];\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  mic = new p5.AudioIn();\n  mic.start();\n}\n\nfunction draw() {\n  background(0);\n  let vol = mic.getLevel()\n  \n  text(vol, 0, 10)\n  \n  volHistory.push(vol)\n  stroke(255)\n  noFill();\n  beginShape()\n  for (let i = 0; i < volHistory.length; i++) {\n    let y = map(volHistory[i], 0, 1, height-(height/3), 0)\n    vertex(i*2, y)\n  }\n  endShape()\n  if (volHistory.length > width/2) {\n    volHistory.splice(0, 1)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "6372431005d51046eb638c9e",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-14T13:34:36.328Z",
+        "updatedAt": "2022-11-14T13:34:36.328Z",
+        "id": "6372431005d51046eb638c9e"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6372431005d51046eb638c9c",
+        "createdAt": "2022-11-14T13:34:36.328Z",
+        "updatedAt": "2022-11-14T13:34:36.328Z",
+        "id": "6372431005d51046eb638c9c"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6372431005d51046eb638c9f",
+        "createdAt": "2022-11-14T13:34:36.328Z",
+        "updatedAt": "2022-11-14T13:34:36.328Z",
+        "id": "6372431005d51046eb638c9f"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6372431005d51046eb638c9d",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/dc7c48ea-db2f-4011-afaf-5ab5b3a40a0b.mp3",
+        "updatedAt": "2022-11-14T13:34:36.328Z",
+        "createdAt": "2022-11-14T13:34:36.328Z",
+        "id": "6372431005d51046eb638c9d"
+      }
+    ],
+    "createdAt": "2022-11-14T13:30:58.687Z",
+    "updatedAt": "2022-11-14T13:34:36.328Z",
+    "id": "3CJOn3zPk"
+  },
+  {
+    "name": "SoundAmp Graph",
+    "_id": "wZzHYbwvc",
+    "updatedAt": "2022-11-14T13:27:55.818Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "63723aa87bd64c4bf59abc0c",
+          "63723aa87bd64c4bf59abc0b",
+          "63723aa87bd64c4bf59abc0d",
+          "63723abc7bd64c4bf59abc0f"
+        ],
+        "fileType": "folder",
+        "_id": "63723aa87bd64c4bf59abc0e",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-14T13:27:55.818Z",
+        "updatedAt": "2022-11-14T13:27:55.818Z",
+        "id": "63723aa87bd64c4bf59abc0e"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let song;\nlet amp;\nlet btn;\nlet volHistory = [];\n\n\nfunction preload() {\n  song = loadSound('this.mp3')\n}\n\nfunction setup() {\n  createCanvas(400, 400);\n  btn = createButton('toggle')\n  btn.mousePressed(toggleSong)\n  song.play();\n  amp = new p5.Amplitude();\n}\n\nfunction draw() {\n  background(0);\n  let vol = amp.getLevel();\n  \n  volHistory.push(vol)\n  stroke(255)\n  noFill();\n  beginShape()\n  for (let i = 0; i < volHistory.length; i++) {\n    let y = map(volHistory[i], 0, 1, height-150, 0)\n    vertex(i*2, y)\n  }\n  endShape()\n  if (volHistory.length > width/2) {\n    volHistory.splice(0, 1)\n  }\n}\n\nfunction toggleSong() {\n  if (song.isPlaying()) {\n    song.pause()\n  } else {\n    song.play()\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "63723aa87bd64c4bf59abc0b",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-14T13:27:55.818Z",
+        "updatedAt": "2022-11-14T13:27:55.818Z",
+        "id": "63723aa87bd64c4bf59abc0b"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63723aa87bd64c4bf59abc0c",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-14T13:27:55.818Z",
+        "updatedAt": "2022-11-14T13:27:55.818Z",
+        "id": "63723aa87bd64c4bf59abc0c"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "63723aa87bd64c4bf59abc0d",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-14T13:27:55.818Z",
+        "updatedAt": "2022-11-14T13:27:55.818Z",
+        "id": "63723aa87bd64c4bf59abc0d"
+      },
+      {
+        "name": "this.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63723abc7bd64c4bf59abc0f",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/2d589fd6-6d6e-459a-b687-f1e22f95ef67.mp3",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-14T13:27:55.818Z",
+        "updatedAt": "2022-11-14T13:27:55.818Z",
+        "id": "63723abc7bd64c4bf59abc0f"
+      }
+    ],
+    "createdAt": "2022-11-14T13:27:55.818Z",
+    "id": "wZzHYbwvc"
+  },
+  {
+    "name": "text",
+    "_id": "N9YK36sXF",
+    "updatedAt": "2022-11-12T13:32:06.130Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "636f9d01a55ba626cd23b6e9",
+          "636f9d01a55ba626cd23b6e8",
+          "636f9d01a55ba626cd23b6ea"
+        ],
+        "fileType": "folder",
+        "_id": "636f9d01a55ba626cd23b6eb",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-12T13:32:06.130Z",
+        "updatedAt": "2022-11-12T13:32:06.130Z",
+        "id": "636f9d01a55ba626cd23b6eb"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let letters = [];\nfunction setup() {\n  createCanvas(400, 400);\n  textSize(32)\n}\n\nfunction draw() {\n  background(220);\n  let string = \"\"\n  for (let letter of letters) {\n    string += letter\n  }\n  text(string.toString().replaceAll(\",\", \"\"), 0, 49);\n}\n\nfunction keyPressed() {\n  if (key == \"Backspace\") {\n    letters.pop();\n    return;\n  }\n  if (key == \"Enter\") {\n    letters.push(\"\\n\");\n    return\n  }\n  letters.push(key);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636f9d01a55ba626cd23b6e8",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-12T13:32:06.130Z",
+        "updatedAt": "2022-11-12T13:32:06.130Z",
+        "id": "636f9d01a55ba626cd23b6e8"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636f9d01a55ba626cd23b6e9",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-12T13:32:06.130Z",
+        "updatedAt": "2022-11-12T13:32:06.130Z",
+        "id": "636f9d01a55ba626cd23b6e9"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636f9d01a55ba626cd23b6ea",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-12T13:32:06.130Z",
+        "updatedAt": "2022-11-12T13:32:06.130Z",
+        "id": "636f9d01a55ba626cd23b6ea"
+      }
+    ],
+    "createdAt": "2022-11-12T13:30:44.002Z",
+    "id": "N9YK36sXF"
+  },
+  {
+    "name": "MIcrophone",
+    "_id": "lRT7lJlEB",
+    "updatedAt": "2022-11-13T13:34:51.735Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "636f92fea55ba626cd23b6e5",
+          "636f92fea55ba626cd23b6e4",
+          "636f92fea55ba626cd23b6e6",
+          "6370f27ba89368001a836481"
+        ],
+        "fileType": "folder",
+        "_id": "636f92fea55ba626cd23b6e7",
+        "createdAt": "2022-11-12T13:17:45.541Z",
+        "updatedAt": "2022-11-13T13:34:51.735Z",
+        "id": "636f92fea55ba626cd23b6e7"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let mic;\n\nlet r, g, b = 255\n\nfunction setup() {\n  createCanvas(400, 400);\n  mic = new p5.AudioIn();\n  mic.start();\n}\n\nfunction draw() {\n  background(0);\n  let vol = mic.getLevel()\n  \n  text(vol, 0, 10)\n  fill(r, g, b)\n  \n  ellipse(width/2, height/2, 400, 100 + vol * 300)\n  if (vol > 0.75) {\n    r = random(255)\n    g = random(255)\n    b = random(255)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "636f92fea55ba626cd23b6e4",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-12T13:17:45.541Z",
+        "updatedAt": "2022-11-12T13:17:45.541Z",
+        "id": "636f92fea55ba626cd23b6e4"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636f92fea55ba626cd23b6e5",
+        "createdAt": "2022-11-12T13:17:45.541Z",
+        "updatedAt": "2022-11-12T13:17:45.541Z",
+        "id": "636f92fea55ba626cd23b6e5"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636f92fea55ba626cd23b6e6",
+        "createdAt": "2022-11-12T13:17:45.541Z",
+        "updatedAt": "2022-11-12T13:17:45.541Z",
+        "id": "636f92fea55ba626cd23b6e6"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6370f27ba89368001a836481",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/858cc20b-9834-4637-8cc8-e19ae1d8dac1.mp3",
+        "updatedAt": "2022-11-13T13:34:51.724Z",
+        "createdAt": "2022-11-13T13:34:51.724Z",
+        "id": "6370f27ba89368001a836481"
+      }
+    ],
+    "createdAt": "2022-11-12T13:17:45.541Z",
+    "id": "lRT7lJlEB"
+  },
+  {
+    "name": "Sound Envelope",
+    "_id": "RsbCusvWg",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "636b91eacd5362069dfa9d91",
+          "636b91eacd5362069dfa9d92",
+          "636b91eacd5362069dfa9d93"
+        ],
+        "fileType": "folder",
+        "_id": "636b91eacd5362069dfa9d90",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-02T13:18:06.386Z",
+        "updatedAt": "2023-08-02T13:18:06.386Z",
+        "id": "636b91eacd5362069dfa9d90"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let wave;\nlet slider;\nlet button;\nlet playing = false;\nlet env;\nlet freq = 440;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  env = new p5.Env();\n  env.setADSR(0.05, 0.1, 0.5, 0.5);\n  env.setRange(1, 0);\n\n  wave = new p5.Oscillator();\n  wave.setType(\"sine\");\n  wave.start();\n  wave.amp(env);\n  wave.freq(440);\n\n  button = createButton(\"Play\");\n  button.position(0, 0)\n  button.mousePressed(attack);\n  button.mouseReleased(release)\n}\n\nfunction draw() {\n  background(51)\n  fill(55, 255, 255)\n  ellipse(width/2, height/2, freq/30);\n}\nfunction release() {\n  env.triggerRelease()\n}\n\nfunction attack() {\n  freq = random(100, 12000)\n  wave.freq(freq)\n  env.triggerAttack();\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636b91eacd5362069dfa9d92",
+        "isSelectedFile": true,
+        "createdAt": "2023-08-02T13:18:06.386Z",
+        "updatedAt": "2023-08-02T13:18:06.386Z",
+        "id": "636b91eacd5362069dfa9d92"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.dom.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636b91eacd5362069dfa9d91",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-02T13:18:06.386Z",
+        "updatedAt": "2023-08-02T13:18:06.386Z",
+        "id": "636b91eacd5362069dfa9d91"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636b91eacd5362069dfa9d93",
+        "isSelectedFile": false,
+        "createdAt": "2023-08-02T13:18:06.386Z",
+        "updatedAt": "2023-08-02T13:18:06.386Z",
+        "id": "636b91eacd5362069dfa9d93"
+      }
+    ],
+    "createdAt": "2022-11-09T11:41:30.976Z",
+    "updatedAt": "2023-08-02T13:18:06.386Z",
+    "id": "RsbCusvWg"
+  },
+  {
+    "name": "Sound Synthesis",
+    "_id": "gw2JMmNiL",
+    "updatedAt": "2022-11-09T04:10:25.754Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "636b1f38f01d7211deebe2f0",
+          "636b1f38f01d7211deebe2ef",
+          "636b1f38f01d7211deebe2f1"
+        ],
+        "fileType": "folder",
+        "_id": "636b1f38f01d7211deebe2f2",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-09T04:10:25.754Z",
+        "updatedAt": "2022-11-09T04:10:25.754Z",
+        "id": "636b1f38f01d7211deebe2f2"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let wave;\nlet slider;\nlet button;\nlet playing = false\n\nfunction setup() {\n  createCanvas(400, 400);\n  \n  wave = new p5.Oscillator();\n  wave.setType('triangle');\n  wave.start()\n  wave.amp(0)\n  \n  button = createButton('Play');\n  button.mousePressed(toggle);\n  \n  slider = createSlider(100, 1200, 440);\n}\n\nfunction draw() {\n  background(51);\n  let freq = slider.value()\n  wave.freq(freq)\n  freq = freq/8\n  triangle(width/2, height/2 - freq, width/2 - freq, height/2 + freq, width/2 + freq, height/2 + freq)\n}\n\nfunction toggle() {\n  if (!playing) {\n    playing = true\n    button.html(\"Pause\")\n    wave.amp(0.1)\n    wave.freq(slider.value())\n  } else {\n    wave.amp(0)\n    playing = false\n    button.html(\"Play\")\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "636b1f38f01d7211deebe2ef",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-09T04:10:25.754Z",
+        "updatedAt": "2022-11-09T04:10:25.754Z",
+        "id": "636b1f38f01d7211deebe2ef"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.dom.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636b1f38f01d7211deebe2f0",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-09T04:10:25.754Z",
+        "updatedAt": "2022-11-09T04:10:25.754Z",
+        "id": "636b1f38f01d7211deebe2f0"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "636b1f38f01d7211deebe2f1",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-09T04:10:25.754Z",
+        "updatedAt": "2022-11-09T04:10:25.754Z",
+        "id": "636b1f38f01d7211deebe2f1"
+      }
+    ],
+    "createdAt": "2022-11-09T04:10:25.754Z",
+    "id": "gw2JMmNiL"
+  },
+  {
+    "name": "Snake Game",
+    "_id": "8aTuqXnjJ",
+    "updatedAt": "2022-11-07T16:22:30.662Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6368f87eb98e6d001a3813fd",
+          "6368fac7f5d89d001a71ffd5",
+          "6368d26b99819b1d9fe05616",
+          "6368d26b99819b1d9fe05615",
+          "6368d2f199819b1d9fe05619",
+          "6368d26b99819b1d9fe05617"
+        ],
+        "fileType": "folder",
+        "_id": "6368d26b99819b1d9fe05618",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "id": "6368d26b99819b1d9fe05618"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let res = 24;\nlet snake;\nlet food;\nlet w, h;\nlet touchX, touchY;\nlet eatSound;\nlet gameOverSound;\n\nfunction preload() {\n  eatSound = loadSound(\"eat.mp3\")\n  gameOverSound = loadSound(\"game-over.mp3\")\n}\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  w = floor(width / res);\n  h = floor(height / res);\n  snake = new Snake();\n  foodLocation();\n}\n\nfunction draw() {\n  frameRate(floor(snake.score()*0.5) + 6)\n  background(253, 231, 76);\n  scale(res);\n  \n  \n  if (snake.eat(food)) {\n    foodLocation();\n    eatSound.play()\n  }\n  snake.update();\n  snake.show();\nfill(0)\n  textSize(1.5)\n  text(snake.score(), 1,2)\n  if (snake.endGame()) {\n    gameOverSound.play()\n  }\n  \n\n  fill(163, 0, 0);\n  rect(food.x, food.y, 1, 1);\n  \n}\n\nfunction foodLocation() {\n  let x = floor(random(w));\n  let y = floor(random(h));\n  food = createVector(x, y);\n}\n\nfunction touchStarted() {\n  touchX = mouseX;\n  touchY = mouseY\n}\n\nfunction touchEnded() {\n  let x = mouseX;\n  let y = mouseY\n  if (abs(x - touchX) > abs(y - touchY)) {\n    // user swiped in x direction\n    if ((x - touchX) < 0) {\n      // user swiped LEFT\n      snake.setDir(-1, 0)\n    } else {\n      snake.setDir(1, 0)\n    }\n  } else {\n    if ((y - touchY) < 0) {\n      // user swiped UP\n      snake.setDir(0, -1)\n    } else {\n      snake.setDir(0, 1)\n    }\n  }\n}\n\nfunction keyPressed() {\n  if (key === 'k') {\n    snake.setDir(0, -1);\n  } else if (key === 'j') {\n    snake.setDir(0, 1);\n  } else if (key === 'h') {\n    snake.setDir(-1, 0);\n  } else if (key === 'l') {\n    snake.setDir(1, 0);\n  }\n  if (key === ' ') {\n    snake.grow()\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368d26b99819b1d9fe05615",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "id": "6368d26b99819b1d9fe05615"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n    <style>\n      html, body {\n        touch-action: none\n      }\n    </style>\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"snake.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368d26b99819b1d9fe05616",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "id": "6368d26b99819b1d9fe05616"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368d26b99819b1d9fe05617",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "id": "6368d26b99819b1d9fe05617"
+      },
+      {
+        "name": "snake.js",
+        "content": "class Snake {\n  constructor() {\n    this.body = [];\n    this.body[0] = createVector(0, floor(h / 2));\n    this.xdir = 1;\n    this.ydir = 0;\n  }\n\n  update() {\n    let head = this.body[this.body.length - 1].copy();\n    head.x += this.xdir;\n    head.y += this.ydir;\n    if (head.x > floor(width/res) -1) {\n      head.x = 0;\n    } else if (head.y > floor(height/res) -1) {\n      head.y = 0;\n    } else if (head.x < 0) {\n      head.x = floor(width/res);\n    } else if (head.y < 0) {\n      head.y = floor(height/res);\n    }\n    this.body.shift();\n        this.body.push(head);\n\n  }\n  score() {\n    return this.body.length - 1;\n  }\n  show() {\n    strokeWeight(0.1)\n    stroke(253, 231, 76)\n    for (let i = 0; i < this.body.length; i++) {\n      fill(60, 125, 120);\n      if (i == this.body.length - 1) {\n        fill(0);\n      }\n      rect(this.body[i].x, this.body[i].y, 1, 1);\n    }\n  }\n  resetSnake() {\n    this.body.splice(0, this.body.length);\n    this.body[0] = createVector(0, floor(h / 2));\n    this.xdir = 1;\n    this.ydir = 0;\n  }\n\n  endGame() {\n    let x = this.body[this.body.length - 1].x;\n    let y = this.body[this.body.length - 1].y;\n    for (let i = 0; i < this.body.length - 1; i++) {\n      let part = this.body[i];\n      if (part.x == x && part.y == y) {\n        this.resetSnake();\n        return true;\n      }\n    }\n    return false;\n  }\n\n  eat(pos) {\n    let x = this.body[this.body.length - 1].x;\n    let y = this.body[this.body.length - 1].y;\n    if (x === pos.x && y === pos.y) {\n      this.grow();\n      return true;\n    } else {\n      return false;\n    }\n  }\n  grow() {\n    let head = this.body[this.body.length - 1].copy();\n    this.body.push(head);\n  }\n  setDir(x, y) {\n    if (\n      (this.xdir == 1 && x == -1) ||\n      (this.xdir == -1 && x == 1) ||\n      (this.ydir == 1 && y == -1) ||\n      (this.ydir == -1 && y == 1)\n    ) {\n      return;\n    }\n    this.xdir = x;\n    this.ydir = y;\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368d2f199819b1d9fe05619",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "id": "6368d2f199819b1d9fe05619"
+      },
+      {
+        "name": "eat.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368f87eb98e6d001a3813fd",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/344d8925-4383-4714-948f-34175205e6af.mp3",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "isSelectedFile": false,
+        "id": "6368f87eb98e6d001a3813fd"
+      },
+      {
+        "name": "game-over.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368fac7f5d89d001a71ffd5",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/ded790ba-aaf0-4738-bbe1-c5c4becb8877.mp3",
+        "updatedAt": "2022-11-07T16:22:30.662Z",
+        "createdAt": "2022-11-07T16:22:30.662Z",
+        "isSelectedFile": false,
+        "id": "6368fac7f5d89d001a71ffd5"
+      }
+    ],
+    "createdAt": "2022-11-07T10:37:55.367Z",
+    "id": "8aTuqXnjJ"
+  },
+  {
+    "name": "Sound",
+    "_id": "eKIcqR9jP",
+    "updatedAt": "2022-11-07T09:39:54.591Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6368790e953d10511f9b7f4c",
+          "63687999953d10511f9b7f4f",
+          "6368790e953d10511f9b7f4b",
+          "6368790e953d10511f9b7f4d"
+        ],
+        "fileType": "folder",
+        "_id": "6368790e953d10511f9b7f4e",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T09:39:54.591Z",
+        "updatedAt": "2022-11-07T09:39:54.591Z",
+        "id": "6368790e953d10511f9b7f4e"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let song;\nlet button;\nlet amp;\n\nfunction setup() {\n  createCanvas(200, 200);\n  background(51);\n  song = loadSound(\"low.mp3\", loaded);\n  song.setVolume(0.1);\n  amp = new p5.Amplitude()\n}\n\nfunction draw() {\n  background(51)\n  fill(255, 0, 255)\n  \n  const vol = amp.getLevel()\n  const d = map(vol, 0, 0.1, 10, 200)\n  ellipse(width/2, height/2, d*2)\n}\n\nfunction loaded() {\n  button = createButton(\"play\");\n  button.mousePressed(toggleSong);\n}\nfunction changeBackground() {\n  background(random(255), random(255), random(255));\n}\n\nfunction toggleSong() {\n  if (!song.isPlaying()) {\n    song.loop();\n    button.html(\"pause\");\n  } else {\n    song.pause();\n    button.html(\"play\");\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368790e953d10511f9b7f4b",
+        "isSelectedFile": true,
+        "createdAt": "2022-11-07T09:39:54.591Z",
+        "updatedAt": "2022-11-07T09:39:54.591Z",
+        "id": "6368790e953d10511f9b7f4b"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368790e953d10511f9b7f4c",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T09:39:54.591Z",
+        "updatedAt": "2022-11-07T09:39:54.591Z",
+        "id": "6368790e953d10511f9b7f4c"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6368790e953d10511f9b7f4d",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T09:39:54.591Z",
+        "updatedAt": "2022-11-07T09:39:54.591Z",
+        "id": "6368790e953d10511f9b7f4d"
+      },
+      {
+        "name": "low.mp3",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "63687999953d10511f9b7f4f",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/260b6290-53e5-4608-8835-cc80ce65ebe9.mp3",
+        "isSelectedFile": false,
+        "createdAt": "2022-11-07T09:39:54.591Z",
+        "updatedAt": "2022-11-07T09:39:54.591Z",
+        "id": "63687999953d10511f9b7f4f"
+      }
+    ],
+    "createdAt": "2022-11-07T03:26:04.696Z",
+    "id": "eKIcqR9jP"
+  },
+  {
+    "name": "pipes.js rect",
+    "_id": "ZSt6NnbZu",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "62f600bc757e807bfa0738df",
+          "62f600bc757e807bfa0738e0",
+          "62f600bc757e807bfa0738e1"
+        ],
+        "fileType": "folder",
+        "_id": "62f600bc757e807bfa0738de",
+        "createdAt": "2022-08-12T07:58:45.153Z",
+        "updatedAt": "2022-08-12T07:58:45.153Z",
+        "isSelectedFile": false,
+        "id": "62f600bc757e807bfa0738de"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let COLORS = [];\nconst thickness = 12\nconst SPEED_VAR = 16;\nlet SPEED;\nlet x1, y1, w, h, wSpeed, hSpeed;\nlet n = [\"x\", \"y\"];\nfunction setup() {\n  COLORS = [\n    [244, 67, 54],\n    [232, 30, 99],\n    [156, 39, 176],\n    [103, 58, 183],\n    [63, 81, 181], \n    [33, 150, 243],\n    [3, 169, 244],\n    [0, 188, 212],\n    [0, 150, 136],\n    [76, 174, 80],\n    [139, 195, 74],\n    [205, 220, 57],\n    [255, 235, 59],\n    [255, 193, 7],\n    [255, 152, 0],\n    [255, 87, 34]\n  ];\n  createCanvas(windowWidth, windowHeight);\n  background(0);\n  strokeWeight(4)\n  \n  x1 = 500;\n  y1 = height / 2;\n  SPEED = random([1, -1]) * SPEED_VAR;\n  w = 0;\n  h = thickness;\n  wSpeed = SPEED;\n  hSpeed = 0;\n  setInterval(\n    () => background(0),\n    (min(windowWidth, windowHeight) / 30) * 1000\n  );\n}\n\nfunction draw() {\n  // noStroke()\n  // background(200)\n  rect(x1, y1, w, h);\n  w += wSpeed\n  h += hSpeed\n  \n  // handline rect going out of screen\n  if (w + x1 > width) {\n    x1 = 0\n    w = 0\n  }\n  if (w + x1 < 0) {\n    x1 = width\n    w = 0\n  }\n  if (h + y1 > height) {\n    y1 = 0\n    h = 0\n  }\n  if (h + y1 < 0) {\n    y1 = height\n    h = 0\n  }\n  \n  if (\n    frameCount %\n      random([\n        7,\n        11,\n        13,\n        17,\n        19,\n        23,\n        29,\n        31,\n        37,\n        41,\n        43,\n        47,\n        53,\n        59,\n        61,\n        67,\n        71,\n        73,\n        79,\n        83,\n        89,\n        97,\n      ]) ===\n    0\n  ) {\n    changeDirection();\n  }\n}\nfunction changeDirection() {\n  let color = random(COLORS);\n  fill(`rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.25)`);\n  SPEED = random([1, -1]) * SPEED_VAR;\n  x1 += w - thickness;\n  y1 += h - thickness;\n  if (wSpeed === 0) {\n    wSpeed = SPEED;\n    hSpeed = 0;\n    h = thickness\n  } else if (hSpeed === 0) {\n    hSpeed = SPEED;\n    wSpeed = 0;\n    w = thickness\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62f600bc757e807bfa0738e0",
+        "isSelectedFile": true,
+        "createdAt": "2022-08-12T07:58:45.153Z",
+        "updatedAt": "2022-08-12T07:58:45.153Z",
+        "id": "62f600bc757e807bfa0738e0"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62f600bc757e807bfa0738df",
+        "createdAt": "2022-08-12T07:58:45.153Z",
+        "updatedAt": "2022-08-12T07:58:45.153Z",
+        "isSelectedFile": false,
+        "id": "62f600bc757e807bfa0738df"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62f600bc757e807bfa0738e1",
+        "createdAt": "2022-08-12T07:58:45.153Z",
+        "updatedAt": "2022-08-12T07:58:45.153Z",
+        "isSelectedFile": false,
+        "id": "62f600bc757e807bfa0738e1"
+      }
+    ],
+    "createdAt": "2022-08-12T07:26:54.252Z",
+    "updatedAt": "2022-08-12T07:58:45.153Z",
+    "id": "ZSt6NnbZu"
+  },
+  {
+    "name": "pipes.js",
+    "_id": "XFXqaazO4",
+    "updatedAt": "2022-08-12T07:25:50.642Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "62f52259553ae26a388d8887",
+          "62f52259553ae26a388d8886",
+          "62f52259553ae26a388d8888"
+        ],
+        "fileType": "folder",
+        "_id": "62f52259553ae26a388d8889",
+        "createdAt": "2022-08-12T07:25:50.642Z",
+        "updatedAt": "2022-08-12T07:25:50.642Z",
+        "isSelectedFile": false,
+        "id": "62f52259553ae26a388d8889"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let COLORS = [];\nconst SPEED_VAR = 8;\nlet SPEED;\nlet x1, y1, x2, y2, xSpeed, ySpeed;\nlet n = [\"x\", \"y\"];\nfunction setup() {\n  COLORS = [\n    [244, 67, 54],\n    [232, 30, 99],\n    [156, 39, 176],\n    [103, 58, 183],\n    [63, 81, 181], \n    [33, 150, 243],\n    [3, 169, 244],\n    [0, 188, 212],\n    [0, 150, 136],\n    [76, 174, 80],\n    [139, 195, 74],\n    [205, 220, 57],\n    [255, 235, 59],\n    [255, 193, 7],\n    [255, 152, 0],\n    [255, 87, 34]\n  ];\n  createCanvas(windowWidth, windowHeight);\n  background(0);\n  stroke(255);\n  strokeCap(PROJECT);\n  x1 = 0;\n  y1 = height / 2;\n  SPEED = random([1, -1]) * SPEED_VAR;\n  x2 = x1;\n  y2 = y1;\n  xSpeed = SPEED;\n  ySpeed = 0;\n  setInterval(\n    () => background(0),\n    (min(windowWidth, windowHeight) / 30) * 1000\n  );\n}\n\nfunction draw() {\n  strokeWeight(8);\n  // background(200)\n  line(x1, y1, x2, y2);\n  x2 += xSpeed;\n  y2 += ySpeed;\n\n  // Handling line going out of screen\n  if (x2 > width) {\n    x2 = 0;\n    x1 = x2;\n  }\n  if (x2 < 0) {\n    x2 = width;\n    x1 = x2;\n  }\n  if (y2 > height) {\n    y2 = 0;\n    y1 = y2;\n  }\n  if (y2 < 0) {\n    y2 = height;\n    y1 = y2;\n  }\n  if (\n    frameCount %\n      random([\n        7,\n        11,\n        13,\n        17,\n        19,\n        23,\n        29,\n        31,\n        37,\n        41,\n        43,\n        47,\n        53,\n        59,\n        61,\n        67,\n        71,\n        73,\n        79,\n        83,\n        89,\n        97,\n      ]) ===\n    0\n  ) {\n    changeDirection();\n  }\n}\nfunction changeDirection() {\n  // setTimeout(() => {\n  let color = random(COLORS);\n  stroke(`rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.25)`);\n  SPEED = random([1, -1]) * SPEED_VAR;\n  x1 = x2;\n  y1 = y2;\n  if (xSpeed === 0) {\n    xSpeed = SPEED;\n    ySpeed = 0;\n  } else if (ySpeed === 0) {\n    ySpeed = SPEED;\n    xSpeed = 0;\n  }\n  // }, Math.random() * 3000);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62f52259553ae26a388d8886",
+        "isSelectedFile": true,
+        "createdAt": "2022-08-12T07:25:50.642Z",
+        "updatedAt": "2022-08-12T07:25:50.642Z",
+        "id": "62f52259553ae26a388d8886"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62f52259553ae26a388d8887",
+        "createdAt": "2022-08-12T07:25:50.642Z",
+        "updatedAt": "2022-08-12T07:25:50.642Z",
+        "isSelectedFile": false,
+        "id": "62f52259553ae26a388d8887"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62f52259553ae26a388d8888",
+        "createdAt": "2022-08-12T07:25:50.642Z",
+        "updatedAt": "2022-08-12T07:25:50.642Z",
+        "isSelectedFile": false,
+        "id": "62f52259553ae26a388d8888"
+      }
+    ],
+    "createdAt": "2022-08-11T15:45:48.327Z",
+    "id": "XFXqaazO4"
+  },
+  {
+    "name": "Thoracic deer",
+    "_id": "V8YsFJLv3",
+    "updatedAt": "2022-07-24T07:45:59.247Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "62dcf4beb4d5d68e06a73c92",
+          "62dcf4beb4d5d68e06a73c91",
+          "62dcf4beb4d5d68e06a73c93"
+        ],
+        "fileType": "folder",
+        "_id": "62dcf4beb4d5d68e06a73c94",
+        "isSelectedFile": false,
+        "createdAt": "2022-07-24T07:45:59.247Z",
+        "updatedAt": "2022-07-24T07:45:59.247Z",
+        "id": "62dcf4beb4d5d68e06a73c94"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  translate(width/2, height/2)\n  background(40);\n  stroke(255)\n  for (let x = -200; x < 200; x+=1) {\n    let h = mouseY/5;\n    let w = mouseX/2500;\n    let y = h*cos(x * w)\n    point(x, y)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "62dcf4beb4d5d68e06a73c91",
+        "isSelectedFile": true,
+        "createdAt": "2022-07-24T07:45:59.247Z",
+        "updatedAt": "2022-07-24T07:45:59.247Z",
+        "id": "62dcf4beb4d5d68e06a73c91"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62dcf4beb4d5d68e06a73c92",
+        "isSelectedFile": false,
+        "createdAt": "2022-07-24T07:45:59.247Z",
+        "updatedAt": "2022-07-24T07:45:59.247Z",
+        "id": "62dcf4beb4d5d68e06a73c92"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62dcf4beb4d5d68e06a73c93",
+        "isSelectedFile": false,
+        "createdAt": "2022-07-24T07:45:59.247Z",
+        "updatedAt": "2022-07-24T07:45:59.247Z",
+        "id": "62dcf4beb4d5d68e06a73c93"
+      }
+    ],
+    "createdAt": "2022-07-24T07:36:37.348Z",
+    "id": "V8YsFJLv3"
+  },
+  {
+    "name": "Flax server",
+    "_id": "BkQoQ5_rE",
+    "updatedAt": "2022-07-07T09:16:33.829Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "62c6a141f71fd0691a8bddf3",
+          "62c6a141f71fd0691a8bddf2",
+          "62c6a141f71fd0691a8bddf4"
+        ],
+        "fileType": "folder",
+        "_id": "62c6a141f71fd0691a8bddf5",
+        "createdAt": "2022-07-07T09:16:33.829Z",
+        "updatedAt": "2022-07-07T09:16:33.829Z",
+        "isSelectedFile": false,
+        "id": "62c6a141f71fd0691a8bddf5"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let video;\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  video = createCapture(VIDEO);\n  video.size(windowWidth, windowWidth)\n  video.hide()\n  \n}\n\nfunction draw() {\n  background(255)\n  image(video, 0, 0)\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "62c6a141f71fd0691a8bddf2",
+        "isSelectedFile": true,
+        "createdAt": "2022-07-07T09:16:33.829Z",
+        "updatedAt": "2022-07-07T09:16:33.829Z",
+        "id": "62c6a141f71fd0691a8bddf2"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62c6a141f71fd0691a8bddf3",
+        "createdAt": "2022-07-07T09:16:33.829Z",
+        "updatedAt": "2022-07-07T09:16:33.829Z",
+        "isSelectedFile": false,
+        "id": "62c6a141f71fd0691a8bddf3"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "62c6a141f71fd0691a8bddf4",
+        "createdAt": "2022-07-07T09:16:33.829Z",
+        "updatedAt": "2022-07-07T09:16:33.829Z",
+        "isSelectedFile": false,
+        "id": "62c6a141f71fd0691a8bddf4"
+      }
+    ],
+    "createdAt": "2022-07-07T09:03:50.913Z",
+    "id": "BkQoQ5_rE"
+  },
+  {
+    "name": "Trusted ring",
+    "_id": "SIQosC4FF",
+    "updatedAt": "2021-12-21T12:06:24.946Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61c1c33661397b1c24f74150",
+          "61c1c33661397b1c24f7414f",
+          "61c1c33661397b1c24f74151"
+        ],
+        "fileType": "folder",
+        "_id": "61c1c33661397b1c24f74152",
+        "createdAt": "2021-12-21T12:06:24.946Z",
+        "updatedAt": "2021-12-21T12:06:24.946Z",
+        "id": "61c1c33661397b1c24f74152"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(220);\n  clear();\n  let display = touches.length + ' touches';\n  text(display, 5, 10);\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61c1c33661397b1c24f7414f",
+        "isSelectedFile": true,
+        "createdAt": "2021-12-21T12:06:24.946Z",
+        "updatedAt": "2021-12-21T12:06:24.946Z",
+        "id": "61c1c33661397b1c24f7414f"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61c1c33661397b1c24f74150",
+        "createdAt": "2021-12-21T12:06:24.946Z",
+        "updatedAt": "2021-12-21T12:06:24.946Z",
+        "id": "61c1c33661397b1c24f74150"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61c1c33661397b1c24f74151",
+        "createdAt": "2021-12-21T12:06:24.946Z",
+        "updatedAt": "2021-12-21T12:06:24.946Z",
+        "id": "61c1c33661397b1c24f74151"
+      }
+    ],
+    "createdAt": "2021-12-21T12:06:19.052Z",
+    "id": "SIQosC4FF"
+  },
+  {
+    "name": "7.4 Mouse Interaction with Objects",
+    "_id": "b-V4SZnDR",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6156a8e544003a46d14624c6",
+          "6156a8e544003a46d14624c7",
+          "6156a8e544003a46d14624c8"
+        ],
+        "fileType": "folder",
+        "_id": "6156a8e544003a46d14624c4",
+        "isSelectedFile": false,
+        "createdAt": "2021-12-21T12:02:51.338Z",
+        "updatedAt": "2021-12-21T12:02:51.338Z",
+        "id": "6156a8e544003a46d14624c4"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let bubbles = [];\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  for (let i = 0; i <random(50); i++) {\n    let x = random(width);\n    let y = random(height);\n    let r = random(10, 50);\n    bubbles.push(new Bubble(x, y, r));\n  }\n}\nfunction touchStarted() {\n  for (let i = 0; i < bubbles.length; i++) {\n    bubbles[i].clicked(mouseX, mouseY);\n  }\n}\nfunction draw() {\n  background(0);\n  for (let i = 0; i < bubbles.length; i++) {\n    bubbles[i].show();\n    bubbles[i].move();\n  }\n}\n\nclass Bubble {\n  constructor(x, y, r) {\n    this.x = x;\n    this.y = y;\n    this.r = r;\n    this.rc=random(255);\n    this.gc=random(255);\n    this.bc=random(255);\n  }\n\n  clicked(px, py) {\n    let d = dist(px, py, this.x, this.y);\n    if (d < this.r) {\n      this.rc=random(255);\n      this.gc=random(255);\n      this.bc=random(255);\n    }\n  }\n\n  show() {\n    fill(this.rc, this.gc, this.bc);\n    stroke(255);\n    strokeWeight(4);\n    ellipse(this.x, this.y, this.r * 2);\n  }\n\n  move() {\n    this.x += random(-5, 5);\n    this.y += random(-5, 5);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6156a8e544003a46d14624c7",
+        "isSelectedFile": true,
+        "createdAt": "2021-12-21T12:02:51.338Z",
+        "updatedAt": "2021-12-21T12:02:51.338Z",
+        "id": "6156a8e544003a46d14624c7"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6156a8e544003a46d14624c6",
+        "isSelectedFile": false,
+        "createdAt": "2021-12-21T12:02:51.338Z",
+        "updatedAt": "2021-12-21T12:02:51.338Z",
+        "id": "6156a8e544003a46d14624c6"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6156a8e544003a46d14624c8",
+        "isSelectedFile": false,
+        "createdAt": "2021-12-21T12:02:51.338Z",
+        "updatedAt": "2021-12-21T12:02:51.338Z",
+        "id": "6156a8e544003a46d14624c8"
+      }
+    ],
+    "createdAt": "2021-10-01T06:20:58.911Z",
+    "updatedAt": "2021-12-21T12:02:51.338Z",
+    "id": "b-V4SZnDR"
+  },
+  {
+    "name": "7.3 Arrays of Objects",
+    "_id": "4cYqFrR20",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61555534c653ee1938a50ee0",
+          "61555534c653ee1938a50ee1",
+          "61555534c653ee1938a50ee2",
+          "61555534c653ee1938a50ee3"
+        ],
+        "fileType": "folder",
+        "_id": "61555534c653ee1938a50edf",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-30T06:41:13.289Z",
+        "updatedAt": "2021-09-30T06:41:13.289Z",
+        "id": "61555534c653ee1938a50edf"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let bubbles = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(0);\n  for(let i = 0; i<bubbles.length; i++){\n    bubbles[i].show();\n    bubbles[i].move();\n  }\n}\n\nfunction mouseDragged() {\n  bubbles.push(new Bubble(mouseX, mouseY, random(5)));\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555534c653ee1938a50ee2",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-30T06:41:13.289Z",
+        "updatedAt": "2021-09-30T06:41:13.289Z",
+        "id": "61555534c653ee1938a50ee2"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n    <script src=\"bubble.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555534c653ee1938a50ee1",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-30T06:41:13.289Z",
+        "updatedAt": "2021-09-30T06:41:13.289Z",
+        "id": "61555534c653ee1938a50ee1"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555534c653ee1938a50ee3",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-30T06:41:13.289Z",
+        "updatedAt": "2021-09-30T06:41:13.289Z",
+        "id": "61555534c653ee1938a50ee3"
+      },
+      {
+        "name": "bubble.js",
+        "content": "class Bubble {\n  constructor(x, y, r) {\n    this.x = x;\n    this.y = y;\n    this.r = r;\n    }\n\n  \n    show() {\n      noFill();\n      stroke(255);\n      strokeWeight(4);\n      ellipse(this.x, this.y, this.r);  \n    }\n    \n    move () {\n      this.x += random(-5, 5);\n      this.y += random(-5, 5);\n    }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555534c653ee1938a50ee0",
+        "isSelectedFile": false,
+        "updatedAt": "2021-09-30T06:41:13.289Z",
+        "createdAt": "2021-09-30T06:41:13.289Z",
+        "id": "61555534c653ee1938a50ee0"
+      }
+    ],
+    "createdAt": "2021-09-30T06:11:40.788Z",
+    "updatedAt": "2021-10-01T06:13:59.238Z",
+    "id": "4cYqFrR20"
+  },
+  {
+    "name": "7.2 Arrays and Loops",
+    "_id": "ot0dI_WI9",
+    "updatedAt": "2021-09-30T06:10:53.516Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61555286c653ee1938a50edc",
+          "61555286c653ee1938a50edb",
+          "61555286c653ee1938a50edd"
+        ],
+        "fileType": "folder",
+        "_id": "61555286c653ee1938a50ede",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-30T06:10:53.516Z",
+        "updatedAt": "2021-09-30T06:10:53.516Z",
+        "id": "61555286c653ee1938a50ede"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let nums = [100, 25, 45, 70];\nfunction setup() {\n  createCanvas(500, 400);\n}\n\nfunction draw() {\n  background(0);\n  for (let i = 0; i < nums.length; i++) {\n    ellipse(i * 100 + 100, 200, nums[i]);\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555286c653ee1938a50edb",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-30T06:10:53.516Z",
+        "updatedAt": "2021-09-30T06:10:53.516Z",
+        "id": "61555286c653ee1938a50edb"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555286c653ee1938a50edc",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-30T06:10:53.516Z",
+        "updatedAt": "2021-09-30T06:10:53.516Z",
+        "id": "61555286c653ee1938a50edc"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61555286c653ee1938a50edd",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-30T06:10:53.516Z",
+        "updatedAt": "2021-09-30T06:10:53.516Z",
+        "id": "61555286c653ee1938a50edd"
+      }
+    ],
+    "createdAt": "2021-09-30T06:10:53.516Z",
+    "id": "ot0dI_WI9"
+  },
+  {
+    "name": "7.1 Arrays",
+    "_id": "y7e7ZfWBk",
+    "updatedAt": "2021-09-30T05:51:15.601Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61554cacc653ee1938a50ed8",
+          "61554cacc653ee1938a50ed7",
+          "61554cacc653ee1938a50ed9"
+        ],
+        "fileType": "folder",
+        "_id": "61554cacc653ee1938a50eda",
+        "createdAt": "2021-09-30T05:51:15.601Z",
+        "updatedAt": "2021-09-30T05:51:15.601Z",
+        "isSelectedFile": false,
+        "id": "61554cacc653ee1938a50eda"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let num = 49;\nlet nums = [100, 25, 58, 45];\n\nlet words = [\"rainbow\", \"heart\", \"purple\", \"friendship\"]\nlet i = 0;\nfunction setup() {\n  createCanvas(400, 400);\n\n}\n\nfunction draw() {\n  background(0);\n  noFill();\n  stroke(255);\n  ellipse(100, 200, num);\n  ellipse(200, 200, nums[0]);\n  \n  fill(155);\n  textSize(32)\n  text(words[i], 12, 200)\n  \n}\n\nfunction mousePressed() {\n  i++;\n  if (i==words.length) {\n    i = 0;\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61554cacc653ee1938a50ed7",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-30T05:51:15.601Z",
+        "updatedAt": "2021-09-30T05:51:15.601Z",
+        "id": "61554cacc653ee1938a50ed7"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61554cacc653ee1938a50ed8",
+        "createdAt": "2021-09-30T05:51:15.601Z",
+        "updatedAt": "2021-09-30T05:51:15.601Z",
+        "isSelectedFile": false,
+        "id": "61554cacc653ee1938a50ed8"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61554cacc653ee1938a50ed9",
+        "createdAt": "2021-09-30T05:51:15.601Z",
+        "updatedAt": "2021-09-30T05:51:15.601Z",
+        "isSelectedFile": false,
+        "id": "61554cacc653ee1938a50ed9"
+      }
+    ],
+    "createdAt": "2021-09-30T05:35:33.262Z",
+    "id": "y7e7ZfWBk"
+  },
+  {
+    "name": "6.4 Adding JavaScript Files",
+    "_id": "UZdpv_9RS",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61501773f289f2002436add3",
+          "6150170c9a57572747154102",
+          "6150170c9a57572747154103",
+          "6150170c9a57572747154104"
+        ],
+        "fileType": "folder",
+        "_id": "6150170c9a57572747154101",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-26T06:51:50.346Z",
+        "updatedAt": "2021-09-26T06:51:50.346Z",
+        "id": "6150170c9a57572747154101"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let bubble;\nlet bubble2;\n\nfunction setup() {\n  createCanvas(400, 400);\n  bubble = new Bubble(100, 100, 110);\n  bubble2 = new Bubble(200, 200, 50);\n}\n\nfunction draw() {\n  background(0);\n  bubble.move();\n  bubble.show();\n  bubble2.move();\n  bubble2.show();\n  bubble2.x = mouseX;\n  bubble2.y = mouseY;\n}\n\nfunction mouseClicked() {\n  bubble.x = mouseX;\n  bubble.y = mouseY;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6150170c9a57572747154103",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-26T06:51:50.346Z",
+        "updatedAt": "2021-09-26T06:51:50.346Z",
+        "id": "6150170c9a57572747154103"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n    <script src=\"bubble.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6150170c9a57572747154102",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-26T06:51:50.346Z",
+        "updatedAt": "2021-09-26T06:51:50.346Z",
+        "id": "6150170c9a57572747154102"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6150170c9a57572747154104",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-26T06:51:50.346Z",
+        "updatedAt": "2021-09-26T06:51:50.346Z",
+        "id": "6150170c9a57572747154104"
+      },
+      {
+        "name": "bubble.js",
+        "content": "class Bubble {\n  constructor(x, y, r) {\n    this.x = x;\n    this.y = y;\n    this.r = r;\n    }\n\n  \n    show() {\n      noFill();\n      stroke(255);\n      strokeWeight(4);\n      ellipse(this.x, this.y, this.r);  \n    }\n    \n    move () {\n      this.x += random(-5, 5);\n      this.y += random(-5, 5);\n    }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61501773f289f2002436add3",
+        "isSelectedFile": false,
+        "updatedAt": "2021-09-26T06:51:50.346Z",
+        "createdAt": "2021-09-26T06:51:50.346Z",
+        "id": "61501773f289f2002436add3"
+      }
+    ],
+    "createdAt": "2021-09-26T06:45:24.332Z",
+    "updatedAt": "2021-09-26T06:51:50.346Z",
+    "id": "UZdpv_9RS"
+  },
+  {
+    "name": "6.2, 6.3 Classes, Constructor Arguments",
+    "_id": "adz5ersM1",
+    "updatedAt": "2021-09-26T06:45:22.021Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61500eba9a575727471540fe",
+          "61500eba9a575727471540fd",
+          "61500eba9a575727471540ff"
+        ],
+        "fileType": "folder",
+        "_id": "61500eba9a57572747154100",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-26T06:45:22.021Z",
+        "updatedAt": "2021-09-26T06:45:22.021Z",
+        "id": "61500eba9a57572747154100"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let bubble;\nlet bubble2;\n\nfunction setup() {\n  createCanvas(400, 400);\n  bubble = new Bubble(100, 100, 110);\n  bubble2 = new Bubble(200, 200, 50);\n}\n\nfunction draw() {\n  background(0);\n  bubble.move();\n  bubble.show();\n  bubble2.move();\n  bubble2.show();\n}\n\nfunction mouseClicked() {\n    bubble.x = mouseX;\n    bubble.y = mouseY;\n  }\n\nclass Bubble {\n  constructor(x, y, r) {\n    this.x = x;\n    this.y = y;\n    this.r = r;\n    }\n\n  \n    show() {\n      noFill();\n      stroke(255);\n      strokeWeight(4);\n      ellipse(this.x, this.y, this.r);  \n    }\n    \n    move () {\n      this.x += random(-5, 5);\n      this.y += random(-5, 5);\n    }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61500eba9a575727471540fd",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-26T06:45:22.021Z",
+        "updatedAt": "2021-09-26T06:45:22.021Z",
+        "id": "61500eba9a575727471540fd"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61500eba9a575727471540fe",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-26T06:45:22.021Z",
+        "updatedAt": "2021-09-26T06:45:22.021Z",
+        "id": "61500eba9a575727471540fe"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61500eba9a575727471540ff",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-26T06:45:22.021Z",
+        "updatedAt": "2021-09-26T06:45:22.021Z",
+        "id": "61500eba9a575727471540ff"
+      }
+    ],
+    "createdAt": "2021-09-26T06:25:30.889Z",
+    "id": "adz5ersM1"
+  },
+  {
+    "name": "5.3 Functions and Returns",
+    "_id": "6waNEM6S1",
+    "updatedAt": "2021-09-18T06:46:51.435Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6145884feb95c23aa6a177a2",
+          "6145884feb95c23aa6a177a1",
+          "6145884feb95c23aa6a177a3"
+        ],
+        "fileType": "folder",
+        "_id": "6145884feb95c23aa6a177a4",
+        "createdAt": "2021-09-18T06:46:51.435Z",
+        "updatedAt": "2021-09-18T06:46:51.435Z",
+        "isSelectedFile": false,
+        "id": "6145884feb95c23aa6a177a4"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n  let cm = kmToCm(3);\n  print(\"value in centimeter is\",cm)\n}\n\nfunction kmToCm(km) {\n  return km*1000;\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "6145884feb95c23aa6a177a1",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-18T06:46:51.435Z",
+        "updatedAt": "2021-09-18T06:46:51.435Z",
+        "id": "6145884feb95c23aa6a177a1"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6145884feb95c23aa6a177a2",
+        "createdAt": "2021-09-18T06:46:51.435Z",
+        "updatedAt": "2021-09-18T06:46:51.435Z",
+        "isSelectedFile": false,
+        "id": "6145884feb95c23aa6a177a2"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6145884feb95c23aa6a177a3",
+        "createdAt": "2021-09-18T06:46:51.435Z",
+        "updatedAt": "2021-09-18T06:46:51.435Z",
+        "isSelectedFile": false,
+        "id": "6145884feb95c23aa6a177a3"
+      }
+    ],
+    "createdAt": "2021-09-18T06:35:00.637Z",
+    "id": "6waNEM6S1"
+  },
+  {
+    "name": "5.2 Function Parameters and Arguments",
+    "_id": "6b5wcIr2u",
+    "updatedAt": "2021-09-18T06:33:15.069Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61458722eb95c23aa6a1779e",
+          "61458722eb95c23aa6a1779d",
+          "61458722eb95c23aa6a1779f"
+        ],
+        "fileType": "folder",
+        "_id": "61458722eb95c23aa6a177a0",
+        "createdAt": "2021-09-18T06:33:15.069Z",
+        "updatedAt": "2021-09-18T06:33:15.069Z",
+        "id": "61458722eb95c23aa6a177a0"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(0);\n  lollipop(100, 50, 80);\n  lollipop(300, 150, 120);\n}\n\nfunction lollipop(x, y, size) {\n  fill(0, 200, 255);\n  rect(x - 10, y - 10, 20, 150);\n\n  fill(255, 0, 200);\n  ellipse(x, y, size);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61458722eb95c23aa6a1779d",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-18T06:33:15.069Z",
+        "updatedAt": "2021-09-18T06:33:15.069Z",
+        "id": "61458722eb95c23aa6a1779d"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61458722eb95c23aa6a1779e",
+        "createdAt": "2021-09-18T06:33:15.069Z",
+        "updatedAt": "2021-09-18T06:33:15.069Z",
+        "id": "61458722eb95c23aa6a1779e"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61458722eb95c23aa6a1779f",
+        "createdAt": "2021-09-18T06:33:15.069Z",
+        "updatedAt": "2021-09-18T06:33:15.069Z",
+        "id": "61458722eb95c23aa6a1779f"
+      }
+    ],
+    "createdAt": "2021-09-18T06:33:15.069Z",
+    "id": "6b5wcIr2u"
+  },
+  {
+    "name": "5.1 Function Basics",
+    "_id": "tKAIqm6Xk",
+    "updatedAt": "2021-09-18T06:17:30.748Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61457f0ceb95c23aa6a1779a",
+          "61457f0ceb95c23aa6a17799",
+          "61457f0ceb95c23aa6a1779b"
+        ],
+        "fileType": "folder",
+        "_id": "61457f0ceb95c23aa6a1779c",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-18T06:17:30.748Z",
+        "updatedAt": "2021-09-18T06:17:30.748Z",
+        "id": "61457f0ceb95c23aa6a1779c"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let ball = {\n  x: 300,\n  y: 200,\n  xSpeed: 4,\n  ySpeed: -4,\n};\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(0);\n  move();\n  bounce();\n  display();\n}\n\nfunction move() {\n  ball.x += ball.xSpeed;\n  ball.y += ball.ySpeed;\n}\n\nfunction bounce() {\n  if (ball.x > width || ball.x < 0) {\n    ball.xSpeed = -ball.xSpeed;\n    ellipse(ball.x, ball.y, 100);\n  }\n  if (ball.y > height || ball.y < 0) {\n    ball.ySpeed = -ball.ySpeed;\n    ellipse(ball.x, ball.y, 100);\n  }\n}\n\nfunction display() {\n  stroke(255);\n  strokeWeight(4);\n  noFill();\n  ellipse(ball.x, ball.y, 24);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61457f0ceb95c23aa6a17799",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-18T06:17:30.748Z",
+        "updatedAt": "2021-09-18T06:17:30.748Z",
+        "id": "61457f0ceb95c23aa6a17799"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61457f0ceb95c23aa6a1779a",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-18T06:17:30.748Z",
+        "updatedAt": "2021-09-18T06:17:30.748Z",
+        "id": "61457f0ceb95c23aa6a1779a"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61457f0ceb95c23aa6a1779b",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-18T06:17:30.748Z",
+        "updatedAt": "2021-09-18T06:17:30.748Z",
+        "id": "61457f0ceb95c23aa6a1779b"
+      }
+    ],
+    "createdAt": "2021-09-18T06:06:24.411Z",
+    "id": "tKAIqm6Xk"
+  },
+  {
+    "name": "4.2 Nested Loops",
+    "_id": "e4TyPE0xj",
+    "updatedAt": "2021-09-18T05:53:39.209Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61457bd5eb95c23aa6a17796",
+          "61457bd5eb95c23aa6a17795",
+          "61457bd5eb95c23aa6a17797"
+        ],
+        "fileType": "folder",
+        "_id": "61457bd5eb95c23aa6a17798",
+        "createdAt": "2021-09-18T05:53:39.209Z",
+        "updatedAt": "2021-09-18T05:53:39.209Z",
+        "isSelectedFile": false,
+        "id": "61457bd5eb95c23aa6a17798"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n  frameRate(24);\n}\n\nfunction draw() {\n  background(0);\n  stroke(255);\n  strokeWeight(4)\n  for (let x =0; x<=width; x+=50) {\n    for (let y =0; y<=width; y+=50){\n      fill(random(255), random(255), random(255));\n      ellipse(x, y, random(50))\n    }\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61457bd5eb95c23aa6a17795",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-18T05:53:39.209Z",
+        "updatedAt": "2021-09-18T05:53:39.209Z",
+        "id": "61457bd5eb95c23aa6a17795"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61457bd5eb95c23aa6a17796",
+        "createdAt": "2021-09-18T05:53:39.209Z",
+        "updatedAt": "2021-09-18T05:53:39.209Z",
+        "isSelectedFile": false,
+        "id": "61457bd5eb95c23aa6a17796"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61457bd5eb95c23aa6a17797",
+        "createdAt": "2021-09-18T05:53:39.209Z",
+        "updatedAt": "2021-09-18T05:53:39.209Z",
+        "isSelectedFile": false,
+        "id": "61457bd5eb95c23aa6a17797"
+      }
+    ],
+    "createdAt": "2021-09-18T05:40:08.378Z",
+    "id": "e4TyPE0xj"
+  },
+  {
+    "name": "4.1 while and for Loops",
+    "_id": "wt_APWeQw",
+    "updatedAt": "2021-09-16T07:08:11.745Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6141946fc34157041137d97c",
+          "6141946fc34157041137d97b",
+          "6141946fc34157041137d97d"
+        ],
+        "fileType": "folder",
+        "_id": "6141946fc34157041137d97e",
+        "createdAt": "2021-09-16T07:08:11.745Z",
+        "updatedAt": "2021-09-16T07:08:11.745Z",
+        "isSelectedFile": false,
+        "id": "6141946fc34157041137d97e"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n  frameRate(8)\n}\n\nfunction draw() {\n  background(0);\n  strokeWeight(4);\n  stroke(255);\n  let x = 0;\n  let y=0\n  while (x <= width) {\n    fill(255, 255, 0);\n    y +=25;\n    ellipse(x, 150-y-random(-50,50), 25);\n    y = -y;\n    x += 50;\n  }\n\n  for (let x = 0; x <= width; x += 50) {\n    fill(0, 255, 255);\n    y+=25;\n    ellipse(x, 250-y-random(-50,50), 25);\n    y=-y\n  }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6141946fc34157041137d97b",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-16T07:08:11.745Z",
+        "updatedAt": "2021-09-16T07:08:11.745Z",
+        "id": "6141946fc34157041137d97b"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6141946fc34157041137d97c",
+        "createdAt": "2021-09-16T07:08:11.745Z",
+        "updatedAt": "2021-09-16T07:08:11.745Z",
+        "isSelectedFile": false,
+        "id": "6141946fc34157041137d97c"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6141946fc34157041137d97d",
+        "createdAt": "2021-09-16T07:08:11.745Z",
+        "updatedAt": "2021-09-16T07:08:11.745Z",
+        "isSelectedFile": false,
+        "id": "6141946fc34157041137d97d"
+      }
+    ],
+    "createdAt": "2021-09-15T06:36:31.642Z",
+    "id": "wt_APWeQw"
+  },
+  {
+    "name": "3.4 Boolean Variables",
+    "_id": "VHB1C6TrO",
+    "updatedAt": "2021-09-15T06:36:05.827Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61418cdac34157041137d978",
+          "61418cdac34157041137d977",
+          "61418cdac34157041137d979"
+        ],
+        "fileType": "folder",
+        "_id": "61418cdac34157041137d97a",
+        "createdAt": "2021-09-15T06:36:05.827Z",
+        "updatedAt": "2021-09-15T06:36:05.827Z",
+        "isSelectedFile": false,
+        "id": "61418cdac34157041137d97a"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let on = false;\n\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  if (on) {\n    background(0, 255, 0);\n  } else {\n    background(0);\n  }\n  stroke(255);\n  strokeWeight(4);\n  noFill();\n  rectMode(CENTER);\n  fill(0);\n  if (mouseX > 175 && mouseX < 225 && mouseY >175 && mouseY < 225) {\n    fill(255, 0, 255);\n  }\n  rect(200, 200, 50);\n}\n\nfunction mousePressed() {\n  if (mouseX > 175 && mouseX < 225 && mouseY >175 && mouseY < 225) {\n    fill(255, 0, 255);\n    if (mousePressed) {\n      on = !on;\n    }\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61418cdac34157041137d977",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-15T06:36:05.827Z",
+        "updatedAt": "2021-09-15T06:36:05.827Z",
+        "id": "61418cdac34157041137d977"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61418cdac34157041137d978",
+        "createdAt": "2021-09-15T06:36:05.827Z",
+        "updatedAt": "2021-09-15T06:36:05.827Z",
+        "isSelectedFile": false,
+        "id": "61418cdac34157041137d978"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61418cdac34157041137d979",
+        "createdAt": "2021-09-15T06:36:05.827Z",
+        "updatedAt": "2021-09-15T06:36:05.827Z",
+        "isSelectedFile": false,
+        "id": "61418cdac34157041137d979"
+      }
+    ],
+    "createdAt": "2021-09-15T06:05:00.750Z",
+    "id": "VHB1C6TrO"
+  },
+  {
+    "name": "3.3 Else and Else if",
+    "_id": "S1GT5Y6WT",
+    "updatedAt": "2021-09-14T07:48:54.889Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61404fa9fd8ae82d7432ae54",
+          "61404fa9fd8ae82d7432ae53",
+          "61404fa9fd8ae82d7432ae55"
+        ],
+        "fileType": "folder",
+        "_id": "61404fa9fd8ae82d7432ae56",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:48:54.889Z",
+        "updatedAt": "2021-09-14T07:48:54.889Z",
+        "id": "61404fa9fd8ae82d7432ae56"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(0);\n  stroke(255);\n  strokeWeight(4);\n  noFill();\n  if (mouseX > 300) {\n    ellipse(200, 200, 100);\n  }\n  else if (mouseX >100) {\n    line(0, 0, width, height);\n  }\n  else {\n    rectMode(CENTER);\n    rect(200, 200, 100)\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61404fa9fd8ae82d7432ae53",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-14T07:48:54.889Z",
+        "updatedAt": "2021-09-14T07:48:54.889Z",
+        "id": "61404fa9fd8ae82d7432ae53"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61404fa9fd8ae82d7432ae54",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:48:54.889Z",
+        "updatedAt": "2021-09-14T07:48:54.889Z",
+        "id": "61404fa9fd8ae82d7432ae54"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61404fa9fd8ae82d7432ae55",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:48:54.889Z",
+        "updatedAt": "2021-09-14T07:48:54.889Z",
+        "id": "61404fa9fd8ae82d7432ae55"
+      }
+    ],
+    "createdAt": "2021-09-14T07:48:42.323Z",
+    "id": "S1GT5Y6WT"
+  },
+  {
+    "name": "3.2 The Bouncing Ball",
+    "_id": "5gnyXn5al",
+    "updatedAt": "2021-09-14T07:30:28.221Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61404adcfd8ae82d7432ae50",
+          "61404adcfd8ae82d7432ae4f",
+          "61404adcfd8ae82d7432ae51"
+        ],
+        "fileType": "folder",
+        "_id": "61404adcfd8ae82d7432ae52",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:30:28.221Z",
+        "updatedAt": "2021-09-14T07:30:28.221Z",
+        "id": "61404adcfd8ae82d7432ae52"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let x = 0;\nlet speed = 5;\n\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(0);\n  stroke(255);\n  strokeWeight(4);\n  ellipse(x, 200, 100);\n  \n  if (x > width || x < 0) {\n    speed = -(speed);\n    fill(random(255), random(255), random(255));\n  }\n  x+=speed;\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61404adcfd8ae82d7432ae4f",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-14T07:30:28.221Z",
+        "updatedAt": "2021-09-14T07:30:28.221Z",
+        "id": "61404adcfd8ae82d7432ae4f"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61404adcfd8ae82d7432ae50",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:30:28.221Z",
+        "updatedAt": "2021-09-14T07:30:28.221Z",
+        "id": "61404adcfd8ae82d7432ae50"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61404adcfd8ae82d7432ae51",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:30:28.221Z",
+        "updatedAt": "2021-09-14T07:30:28.221Z",
+        "id": "61404adcfd8ae82d7432ae51"
+      }
+    ],
+    "createdAt": "2021-09-14T07:24:27.761Z",
+    "id": "5gnyXn5al"
+  },
+  {
+    "name": "3.1 Introduction to Condition Statements",
+    "_id": "-GHq7PXQi",
+    "updatedAt": "2021-09-14T07:09:57.601Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6140362afd8ae82d7432ae4c",
+          "6140362afd8ae82d7432ae4b",
+          "6140362afd8ae82d7432ae4d"
+        ],
+        "fileType": "folder",
+        "_id": "6140362afd8ae82d7432ae4e",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:09:57.600Z",
+        "updatedAt": "2021-09-14T07:09:57.600Z",
+        "id": "6140362afd8ae82d7432ae4e"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(0);\n  \n  stroke(255);\n  strokeWeight(4);\n  noFill();\n  \n  \n  if (mouseX > 200) {\n    fill(255, 0, 255);\n  }\n  ellipse(200, 200, 50);\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "6140362afd8ae82d7432ae4b",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-14T07:09:57.601Z",
+        "updatedAt": "2021-09-14T07:09:57.601Z",
+        "id": "6140362afd8ae82d7432ae4b"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6140362afd8ae82d7432ae4c",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:09:57.601Z",
+        "updatedAt": "2021-09-14T07:09:57.601Z",
+        "id": "6140362afd8ae82d7432ae4c"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6140362afd8ae82d7432ae4d",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-14T07:09:57.601Z",
+        "updatedAt": "2021-09-14T07:09:57.601Z",
+        "id": "6140362afd8ae82d7432ae4d"
+      }
+    ],
+    "createdAt": "2021-09-14T07:09:57.601Z",
+    "id": "-GHq7PXQi"
+  },
+  {
+    "name": "random Background when clicked",
+    "_id": "zkvNXBKFt",
+    "updatedAt": "2021-09-11T08:49:47.333Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c6bb0d50bd8fd3e773959",
+          "613c6bb0d50bd8fd3e773958",
+          "613c6bb0d50bd8fd3e77395a"
+        ],
+        "fileType": "folder",
+        "_id": "613c6bb0d50bd8fd3e77395b",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T08:49:47.333Z",
+        "updatedAt": "2021-09-11T08:49:47.333Z",
+        "id": "613c6bb0d50bd8fd3e77395b"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Random Backgrouond when you click mouse\nlet r, g, b;\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  r = random(255);\n  g = random(255);\n  b = random(255);\n}\n\nfunction draw() {\n  background(r, g, b);\n}\n\nfunction mousePressed() {\n  r = random(255);\n  g = random(255);\n  b = random(255);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c6bb0d50bd8fd3e773958",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T08:49:47.333Z",
+        "updatedAt": "2021-09-11T08:49:47.333Z",
+        "id": "613c6bb0d50bd8fd3e773958"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c6bb0d50bd8fd3e773959",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T08:49:47.333Z",
+        "updatedAt": "2021-09-11T08:49:47.333Z",
+        "id": "613c6bb0d50bd8fd3e773959"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c6bb0d50bd8fd3e77395a",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T08:49:47.333Z",
+        "updatedAt": "2021-09-11T08:49:47.333Z",
+        "id": "613c6bb0d50bd8fd3e77395a"
+      }
+    ],
+    "createdAt": "2021-09-11T08:46:51.492Z",
+    "id": "zkvNXBKFt"
+  },
+  {
+    "name": "2.6 createGraphics()",
+    "_id": "EuY2UZJg3",
+    "updatedAt": "2021-09-11T08:41:00.491Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c66d9d50bd8fd3e773955",
+          "613c66d9d50bd8fd3e773954",
+          "613c66d9d50bd8fd3e773956"
+        ],
+        "fileType": "folder",
+        "_id": "613c66d9d50bd8fd3e773957",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T08:41:00.491Z",
+        "updatedAt": "2021-09-11T08:41:00.491Z",
+        "id": "613c66d9d50bd8fd3e773957"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let x = 200;\nlet y = 200;\nlet extraCanvas;\n\nfunction setup() {\n  createCanvas(400, 400);\n  extraCanvas = createGraphics(windowWidth, windowHeight);\n  extraCanvas.clear();\n  background(0);\n}\n\nfunction draw() {\n  background(0);\n  image(extraCanvas, 0, 0);\n  x+=random(-5, 5);\n  y+=random(-5, 5);\n  \n  let starX = random(width);\n  let starY = random(height);\n  \n  extraCanvas.ellipse(starX, starY, 10)\n  if (mouseIsPressed) {\n    extraCanvas.fill(random(255),random(255),random(255));\n    extraCanvas.noStroke();\n  //   extraCanvas.ellipse(mouseX, mouseY, 50);\n  }\n  \n  fill(220);\n  stroke(255);\n  rectMode(CENTER);\n  rect(x, y, 20);\n  \n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c66d9d50bd8fd3e773954",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T08:41:00.491Z",
+        "updatedAt": "2021-09-11T08:41:00.491Z",
+        "id": "613c66d9d50bd8fd3e773954"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c66d9d50bd8fd3e773955",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T08:41:00.491Z",
+        "updatedAt": "2021-09-11T08:41:00.491Z",
+        "id": "613c66d9d50bd8fd3e773955"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c66d9d50bd8fd3e773956",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T08:41:00.491Z",
+        "updatedAt": "2021-09-11T08:41:00.491Z",
+        "id": "613c66d9d50bd8fd3e773956"
+      }
+    ],
+    "createdAt": "2021-09-11T08:36:22.283Z",
+    "id": "EuY2UZJg3"
+  },
+  {
+    "name": "2.4_The map() function",
+    "_id": "O5ab1Y9NT",
+    "updatedAt": "2021-09-11T08:15:04.111Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c5fc1d50bd8fd3e773951",
+          "613c5fc1d50bd8fd3e773950",
+          "613c5fc1d50bd8fd3e773952"
+        ],
+        "fileType": "folder",
+        "_id": "613c5fc1d50bd8fd3e773953",
+        "createdAt": "2021-09-11T08:15:04.111Z",
+        "updatedAt": "2021-09-11T08:15:04.111Z",
+        "isSelectedFile": false,
+        "id": "613c5fc1d50bd8fd3e773953"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let col = 0;\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n}\n\nfunction draw() {\n  // Backgrouond\n  col = map(mouseX, 0, width, 0, 255);\n  background(col);\n\n  // Circle\n  fill(map(mouseX, 0, width, 255, 0));\n  ellipse(mouseX, height / 2, 50);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5fc1d50bd8fd3e773950",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T08:15:04.111Z",
+        "updatedAt": "2021-09-11T08:15:04.111Z",
+        "id": "613c5fc1d50bd8fd3e773950"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5fc1d50bd8fd3e773951",
+        "createdAt": "2021-09-11T08:15:04.111Z",
+        "updatedAt": "2021-09-11T08:15:04.111Z",
+        "isSelectedFile": false,
+        "id": "613c5fc1d50bd8fd3e773951"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5fc1d50bd8fd3e773952",
+        "createdAt": "2021-09-11T08:15:04.111Z",
+        "updatedAt": "2021-09-11T08:15:04.111Z",
+        "isSelectedFile": false,
+        "id": "613c5fc1d50bd8fd3e773952"
+      }
+    ],
+    "createdAt": "2021-09-11T08:01:50.147Z",
+    "id": "O5ab1Y9NT"
+  },
+  {
+    "name": "paintingRandomColor",
+    "_id": "89GUTTLeo",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c5dc9d50bd8fd3e77394d",
+          "613c5dc9d50bd8fd3e77394e",
+          "613c5dc9d50bd8fd3e77394f"
+        ],
+        "fileType": "folder",
+        "_id": "613c5dc9d50bd8fd3e77394c",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:45:18.875Z",
+        "updatedAt": "2021-09-11T07:45:18.875Z",
+        "id": "613c5dc9d50bd8fd3e77394c"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// painting circle random color\nlet r = 255;\nlet g = 255;\nlet b = 255;\nfunction setup() {\n  createCanvas(400, 300);\n  background(0);\n}\n\nfunction draw() {\n  noStroke();\n  fill(r, g, b, 50);\n  ellipse(mouseX, mouseY, 20);\n}\n\nfunction mousePressed() {\n  r = random(255);\n  g = random(255);\n  b = random(255);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5dc9d50bd8fd3e77394e",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T07:45:18.875Z",
+        "updatedAt": "2021-09-11T07:45:18.875Z",
+        "id": "613c5dc9d50bd8fd3e77394e"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5dc9d50bd8fd3e77394d",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:45:18.875Z",
+        "updatedAt": "2021-09-11T07:45:18.875Z",
+        "id": "613c5dc9d50bd8fd3e77394d"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5dc9d50bd8fd3e77394f",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:45:18.875Z",
+        "updatedAt": "2021-09-11T07:45:18.875Z",
+        "id": "613c5dc9d50bd8fd3e77394f"
+      }
+    ],
+    "createdAt": "2021-09-11T07:41:52.847Z",
+    "updatedAt": "2021-09-11T07:45:18.875Z",
+    "id": "89GUTTLeo"
+  },
+  {
+    "name": "2.4random() function",
+    "_id": "IEQ0ID4VR",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c5922d50bd8fd3e773949",
+          "613c5922d50bd8fd3e77394a",
+          "613c5922d50bd8fd3e77394b"
+        ],
+        "fileType": "folder",
+        "_id": "613c5922d50bd8fd3e773948",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:40:28.243Z",
+        "updatedAt": "2021-09-11T07:40:28.243Z",
+        "id": "613c5922d50bd8fd3e773948"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// random()\n\nlet x, y, r, g, b;\nlet lineWidth = 4;\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n  background(0);\n\n}\nfunction draw() {\n  \n  \n  x = random(width);\n  y = random(height);\n  r = random(255);\n  g = random(255);\n  b = random(255);\n  rectMode(CENTER);\n  noStroke();\n  fill(r,g, b);\n  rect(x, y, 10);\n  squareSize = random(50, 100);\n  lineWidth = random(2, 10);\n}\n\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5922d50bd8fd3e77394a",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T07:40:28.243Z",
+        "updatedAt": "2021-09-11T07:40:28.243Z",
+        "id": "613c5922d50bd8fd3e77394a"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5922d50bd8fd3e773949",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:40:28.243Z",
+        "updatedAt": "2021-09-11T07:40:28.243Z",
+        "id": "613c5922d50bd8fd3e773949"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5922d50bd8fd3e77394b",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:40:28.243Z",
+        "updatedAt": "2021-09-11T07:40:28.243Z",
+        "id": "613c5922d50bd8fd3e77394b"
+      }
+    ],
+    "createdAt": "2021-09-11T07:22:02.417Z",
+    "updatedAt": "2021-09-11T07:40:28.243Z",
+    "id": "IEQ0ID4VR"
+  },
+  {
+    "name": "2.3IncrementationOperators",
+    "_id": "_wVNUzJU5",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c576cd50bd8fd3e773945",
+          "613c576cd50bd8fd3e773946",
+          "613c576cd50bd8fd3e773947"
+        ],
+        "fileType": "folder",
+        "_id": "613c576cd50bd8fd3e773944",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:21:55.640Z",
+        "updatedAt": "2021-09-11T07:21:55.640Z",
+        "id": "613c576cd50bd8fd3e773944"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Flow / Variable\n\nlet circleX = 10;\n\nfunction setup() {\n  createCanvas(400, 300);\n}\nfunction draw() {\n  background(0);\n  noStroke();\n  fill(255);\n  ellipse(circleX, 150, 50);\n  circleX++;\n}\n\nfunction mousePressed() {\n  circleX = 10;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c576cd50bd8fd3e773946",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T07:21:55.640Z",
+        "updatedAt": "2021-09-11T07:21:55.640Z",
+        "id": "613c576cd50bd8fd3e773946"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c576cd50bd8fd3e773945",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:21:55.640Z",
+        "updatedAt": "2021-09-11T07:21:55.640Z",
+        "id": "613c576cd50bd8fd3e773945"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c576cd50bd8fd3e773947",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:21:55.640Z",
+        "updatedAt": "2021-09-11T07:21:55.640Z",
+        "id": "613c576cd50bd8fd3e773947"
+      }
+    ],
+    "createdAt": "2021-09-11T07:14:44.655Z",
+    "updatedAt": "2021-09-11T07:21:55.640Z",
+    "id": "_wVNUzJU5"
+  },
+  {
+    "name": "2.1Variable(Define Your Own)",
+    "_id": "ksaaUvMV4",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c533bd50bd8fd3e773941",
+          "613c533bd50bd8fd3e773942",
+          "613c533bd50bd8fd3e773943"
+        ],
+        "fileType": "folder",
+        "_id": "613c533bd50bd8fd3e773940",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:14:39.868Z",
+        "updatedAt": "2021-09-11T07:14:39.868Z",
+        "id": "613c533bd50bd8fd3e773940"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Flow / Variable\n\nlet circleSize = 10;\n\nfunction setup() {\n  createCanvas(400, 300);\n}\nfunction draw() {\n  background(0);\n  noStroke();\n  fill(255);\n  ellipse(200, 150, circleSize);\n}\n\nfunction mousePressed() {\n  circleSize = circleSize + 10;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c533bd50bd8fd3e773942",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T07:14:39.868Z",
+        "updatedAt": "2021-09-11T07:14:39.868Z",
+        "id": "613c533bd50bd8fd3e773942"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c533bd50bd8fd3e773941",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:14:39.868Z",
+        "updatedAt": "2021-09-11T07:14:39.868Z",
+        "id": "613c533bd50bd8fd3e773941"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c533bd50bd8fd3e773943",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T07:14:39.868Z",
+        "updatedAt": "2021-09-11T07:14:39.868Z",
+        "id": "613c533bd50bd8fd3e773943"
+      }
+    ],
+    "createdAt": "2021-09-11T06:56:51.273Z",
+    "updatedAt": "2021-09-11T07:14:39.868Z",
+    "id": "ksaaUvMV4"
+  },
+  {
+    "name": "2.1Variable(mouseX, mouseY)",
+    "_id": "v_jVI_R1u",
+    "updatedAt": "2021-09-11T06:56:48.085Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c5013d50bd8fd3e77393d",
+          "613c5013d50bd8fd3e77393c",
+          "613c5013d50bd8fd3e77393e"
+        ],
+        "fileType": "folder",
+        "_id": "613c5013d50bd8fd3e77393f",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T06:56:48.085Z",
+        "updatedAt": "2021-09-11T06:56:48.085Z",
+        "id": "613c5013d50bd8fd3e77393f"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Flow / Variable\nfunction setup() {\n  createCanvas(400, 300);\n  background(0);\n}\n\nfunction draw() {\n  noStroke();\n  fill(255, 50);\n  ellipse(mouseX, mouseY, mouseX/8);\n}\n\nfunction mousePressed() {\n  background(0);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5013d50bd8fd3e77393c",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T06:56:48.085Z",
+        "updatedAt": "2021-09-11T06:56:48.085Z",
+        "id": "613c5013d50bd8fd3e77393c"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5013d50bd8fd3e77393d",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T06:56:48.085Z",
+        "updatedAt": "2021-09-11T06:56:48.085Z",
+        "id": "613c5013d50bd8fd3e77393d"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c5013d50bd8fd3e77393e",
+        "isSelectedFile": false,
+        "createdAt": "2021-09-11T06:56:48.085Z",
+        "updatedAt": "2021-09-11T06:56:48.085Z",
+        "id": "613c5013d50bd8fd3e77393e"
+      }
+    ],
+    "createdAt": "2021-09-11T06:56:48.085Z",
+    "id": "v_jVI_R1u"
+  },
+  {
+    "name": "1.6CodeComments",
+    "_id": "hsrKjbl0_",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "613c4d54d50bd8fd3e773939",
+          "613c4d54d50bd8fd3e77393a",
+          "613c4d54d50bd8fd3e77393b"
+        ],
+        "fileType": "folder",
+        "_id": "613c4d54d50bd8fd3e773938",
+        "createdAt": "2021-09-11T06:39:31.883Z",
+        "updatedAt": "2021-09-11T06:39:31.883Z",
+        "isSelectedFile": false,
+        "id": "613c4d54d50bd8fd3e773938"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Code Example\n// by Daniel Shiffman\n// The Coding Train\n// Lauren McCarthy and Cassie Tarakajian (creator of the editor)\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(220, 0, 200);\n  line(0, 0, 400, 400);\n  \n  // Rectangular Face\n  rectMode(CENTER);\n  rect(200, 200, 300, 300, 80, 20, 200, 200);\n  \n  // Right Eye\n  stroke(2);\n  ellipse(130, 135, 100);\n  \n  // Left Eye\n\n  ellipseMode(CENTER);\n  strokeWeight(10)\n  ellipse(260, 130, 70);\n  \n  // Mouth\n  arc(180, 240, 100, 100, 45, 60);\n  \n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c4d54d50bd8fd3e77393a",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-11T06:39:31.883Z",
+        "updatedAt": "2021-09-11T06:39:31.883Z",
+        "id": "613c4d54d50bd8fd3e77393a"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c4d54d50bd8fd3e773939",
+        "createdAt": "2021-09-11T06:39:31.883Z",
+        "updatedAt": "2021-09-11T06:39:31.883Z",
+        "isSelectedFile": false,
+        "id": "613c4d54d50bd8fd3e773939"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "613c4d54d50bd8fd3e77393b",
+        "createdAt": "2021-09-11T06:39:31.883Z",
+        "updatedAt": "2021-09-11T06:39:31.883Z",
+        "isSelectedFile": false,
+        "id": "613c4d54d50bd8fd3e77393b"
+      }
+    ],
+    "createdAt": "2021-09-11T06:31:40.061Z",
+    "updatedAt": "2021-09-11T06:39:31.883Z",
+    "id": "hsrKjbl0_"
+  },
+  {
+    "name": "1.4color",
+    "_id": "YFfnlmzOf",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6139a86763d930604031dba2",
+          "6139a86763d930604031dba3",
+          "6139a86763d930604031dba4"
+        ],
+        "fileType": "folder",
+        "_id": "6139a86763d930604031dba1",
+        "createdAt": "2021-09-09T06:54:41.360Z",
+        "updatedAt": "2021-09-09T06:54:41.360Z",
+        "isSelectedFile": false,
+        "id": "6139a86763d930604031dba1"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20, 255, 120);\n  \n  //line\n  strokeWeight(5);\n  stroke(180 );\n  line(0, 0, 400, 400);\n\n  rectMode(CENTER);\n  stroke(0, 120, 250);\n  strokeWeight(10);\n  fill(255, 0, 120)\n  rect(200, 200, 300, 300, 80, 20, 200, 200);\n  \n  //ellipse1\n  noStroke();\n  fill(0, 0, 250, 95)\n  ellipse(60, 135, 100);\n\n  //   ellipseMode(CENTER);\n  //   strokeWeight(10)\n  //   ellipse(260, 130, 70);\n\n  // line(130, 280, 265, 260);\n  // arc(180, 240, 100, 100, 45, 60);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6139a86763d930604031dba3",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-09T06:54:41.360Z",
+        "updatedAt": "2021-09-09T06:54:41.360Z",
+        "id": "6139a86763d930604031dba3"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6139a86763d930604031dba2",
+        "createdAt": "2021-09-09T06:54:41.360Z",
+        "updatedAt": "2021-09-09T06:54:41.360Z",
+        "isSelectedFile": false,
+        "id": "6139a86763d930604031dba2"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6139a86763d930604031dba4",
+        "createdAt": "2021-09-09T06:54:41.360Z",
+        "updatedAt": "2021-09-09T06:54:41.360Z",
+        "isSelectedFile": false,
+        "id": "6139a86763d930604031dba4"
+      }
+    ],
+    "createdAt": "2021-09-09T06:23:28.415Z",
+    "updatedAt": "2021-09-11T06:18:47.729Z",
+    "id": "YFfnlmzOf"
+  },
+  {
+    "name": "1.3Shape&Drawing",
+    "_id": "21Po5e_Fx",
+    "updatedAt": "2021-09-11T06:18:41.002Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "61399f5963d930604031db9e",
+          "61399f5963d930604031db9d",
+          "61399f5963d930604031db9f"
+        ],
+        "fileType": "folder",
+        "_id": "61399f5963d930604031dba0",
+        "createdAt": "2021-09-09T06:20:44.391Z",
+        "updatedAt": "2021-09-09T06:20:44.391Z",
+        "isSelectedFile": false,
+        "id": "61399f5963d930604031dba0"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(220, 0, 200);\n  \n  line(0, 0, 400, 400);\n  \n  rectMode(CENTER);\n  rect(200, 200, 300, 300, 80, 20, 200, 200);\n  \n  ellipse(130, 135, 100);\n  \n  ellipseMode(CENTER);\n  strokeWeight(10)\n  ellipse(260, 130, 70);\n  \n  // line(130, 280, 265, 260);\n  arc(180, 240, 100, 100, 45, 60);\n  \n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "61399f5963d930604031db9d",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-09T06:20:44.391Z",
+        "updatedAt": "2021-09-09T06:20:44.391Z",
+        "id": "61399f5963d930604031db9d"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61399f5963d930604031db9e",
+        "createdAt": "2021-09-09T06:20:44.391Z",
+        "updatedAt": "2021-09-09T06:20:44.391Z",
+        "isSelectedFile": false,
+        "id": "61399f5963d930604031db9e"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "61399f5963d930604031db9f",
+        "createdAt": "2021-09-09T06:20:44.391Z",
+        "updatedAt": "2021-09-09T06:20:44.391Z",
+        "isSelectedFile": false,
+        "id": "61399f5963d930604031db9f"
+      }
+    ],
+    "createdAt": "2021-09-09T05:56:06.097Z",
+    "id": "21Po5e_Fx"
+  },
+  {
+    "name": "first",
+    "_id": "x69YIyFo7",
+    "updatedAt": "2021-09-06T06:52:15.017Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6135b11e5afa9a85586b16d7",
+          "6135b11e5afa9a85586b16d6",
+          "6135b11e5afa9a85586b16d8",
+          "6135ba9e645a6b00244571b8"
+        ],
+        "fileType": "folder",
+        "_id": "6135b11e5afa9a85586b16d9",
+        "createdAt": "2021-09-06T06:40:07.580Z",
+        "updatedAt": "2021-09-06T06:52:15.017Z",
+        "isSelectedFile": false,
+        "id": "6135b11e5afa9a85586b16d9"
+      },
+      {
+        "name": "sketch.js",
+        "content": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(110, 110, 220);\n  ellipse(mouseX, mouseY, mouseY, mouseX);\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6135b11e5afa9a85586b16d6",
+        "isSelectedFile": true,
+        "createdAt": "2021-09-06T06:40:07.580Z",
+        "updatedAt": "2021-09-06T06:40:07.580Z",
+        "id": "6135b11e5afa9a85586b16d6"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6135b11e5afa9a85586b16d7",
+        "createdAt": "2021-09-06T06:40:07.580Z",
+        "updatedAt": "2021-09-06T06:40:07.580Z",
+        "isSelectedFile": false,
+        "id": "6135b11e5afa9a85586b16d7"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6135b11e5afa9a85586b16d8",
+        "createdAt": "2021-09-06T06:40:07.580Z",
+        "updatedAt": "2021-09-06T06:40:07.580Z",
+        "isSelectedFile": false,
+        "id": "6135b11e5afa9a85586b16d8"
+      },
+      {
+        "name": "Untitled1.gif",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6135ba9e645a6b00244571b8",
+        "url": "https://assets.editor.p5js.org/6135ade860172b0024333e6e/fd6e80e9-b584-48bc-adca-085f69499ee5.gif",
+        "updatedAt": "2021-09-06T06:52:14.965Z",
+        "createdAt": "2021-09-06T06:52:14.965Z",
+        "id": "6135ba9e645a6b00244571b8"
+      }
+    ],
+    "createdAt": "2021-09-06T06:27:47.624Z",
+    "id": "x69YIyFo7"
+  }
+]
