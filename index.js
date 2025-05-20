@@ -1,4 +1,4 @@
-const USER_NAME = "amit_kr";
+const USER_NAME = "amitkrxyz";
 const sketchContainer = document.getElementById("sketches");
 const searchInput = document.getElementById("search");
 let projectsData;
